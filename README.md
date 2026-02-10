@@ -25,6 +25,20 @@ A collection of production-ready cheatsheets for building scalable, resilient, d
 - [**API Error Handling & Resilience**](api-error-handling-cheatsheet.md)
   Production patterns for handling errors, retries, rate limiting, and graceful degradation at the API layer.
 
+### ☕ Java Language & Core
+
+- [**Modern Java Features Quick Reference**](modern-java-features-quick-reference.md)
+  Concise lookup card for Java 17-24+ features: records, sealed types, pattern matching, virtual threads, and other modern language features.
+
+- [**Java Streams & Functional Programming**](java-streams-functional-cheatsheet.md)
+  Production patterns for Stream API, collectors, Optional, and functional composition for data transformation pipelines.
+
+- [**Java Concurrency & Virtual Threads**](java-concurrency-virtual-threads-cheatsheet.md)
+  Production patterns for concurrent programming with virtual threads, structured concurrency, and thread-safe design.
+
+- [**Spring DI & Bean Lifecycle**](spring-di-bean-lifecycle-cheatsheet.md)
+  Dependency injection patterns, bean lifecycle management, auto-configuration, and conditional wiring in Spring Boot 3.x.
+
 ### 💻 Development Best Practices
 
 - [**Code Quality & Design**](code-quality-cheatsheet.md)
@@ -35,6 +49,9 @@ A collection of production-ready cheatsheets for building scalable, resilient, d
 
 - [**Testing Strategy & Patterns**](testing-strategy-cheatsheet.md)
   Comprehensive testing patterns for distributed systems. Unit, integration, contract, and end-to-end testing with JUnit 5 and Testcontainers.
+
+- [**GitHub Copilot Instructions**](github-copilot-enterprise-cheatsheet.md)
+  Patterns for crafting effective Copilot instruction sets that enforce enterprise coding standards, architecture rules, and domain patterns.
 
 ### 🔧 Infrastructure & Operations
 
@@ -50,6 +67,12 @@ A collection of production-ready cheatsheets for building scalable, resilient, d
 - [**Observability**](observability-cheatsheet.md)
   Production-grade observability with metrics, logging, tracing, and alerting. Micrometer, Prometheus, Grafana, and OpenTelemetry patterns.
 
+- [**Docker & Kubernetes Patterns**](docker-kubernetes-patterns-cheatsheet.md)
+  Production container patterns for Java services. Dockerfiles, K8s manifests, health probes, resource management, and deployment strategies.
+
+- [**Incident Response & Runbook Template**](incident-response-runbook-cheatsheet.md)
+  Standardized incident response playbook, investigation framework, and runbook templates for distributed Java services.
+
 ### 📊 Data & Messaging
 
 - [**Apache Kafka Patterns**](kafka-patterns-cheatsheet.md)
@@ -57,6 +80,22 @@ A collection of production-ready cheatsheets for building scalable, resilient, d
 
 - [**MongoDB with Spring Data**](mongodb-spring-data-cheatsheet.md)
   MongoDB production patterns in Spring Boot. Queries, aggregations, indexing, transactions, and performance optimization.
+
+- [**Distributed Locking & Coordination**](distributed-locking-cheatsheet.md)
+  Production patterns for distributed locks, leader election, and coordination across service instances using MongoDB and Redis.
+
+### 🛠️ Build, Deploy & Workflows
+
+- [**Gradle Build & Plugin Patterns**](gradle-build-plugin-patterns-cheatsheet.md)
+  Production Gradle patterns for multi-module builds, custom plugins, dependency management, and CI optimization with Kotlin DSL.
+
+- [**Git Workflow & Branching Strategy**](git-workflow-branching-cheatsheet.md)
+  Standardized Git workflow, branching strategy, commit conventions, and release management for enterprise teams.
+
+### 📝 Documentation & Governance
+
+- [**Architecture Decision Records (ADR) Template**](adr-template-cheatsheet.md)
+  Standardized ADR format for documenting architecture decisions with examples from payment processing and distributed systems.
 
 ---
 
@@ -72,6 +111,7 @@ Each cheatsheet follows a consistent structure:
 ### Stack Context
 
 All cheatsheets are designed for:
+
 - **Language:** Java 21+
 - **Framework:** Spring Boot 3.x
 - **Database:** MongoDB 7.x
@@ -85,20 +125,40 @@ All cheatsheets are designed for:
 
 ## 🚀 Quick Start
 
-1. **Before designing a new service** → Read [Clean Architecture](clean-hexagonal-architecture-cheatsheet.md) and [Code Quality](code-quality-cheatsheet.md)
-2. **Before designing an API** → Read [REST API Design](rest-api-design-cheatsheet.md) and [API Error Handling](api-error-handling-cheatsheet.md)
-3. **Before applying a design pattern** → Read [Design Patterns Decision Guide](design-patterns-decision-guide.md)
-4. **Before adding async communication** → Read [Event-Driven Architecture](event-driven-architecture-cheatsheet.md) and [Kafka Patterns](kafka-patterns-cheatsheet.md)
-5. **Before submitting a PR** → Read [Code Review Checklist](code-review-checklist.md)
-6. **Before going to production** → Read [Fault Tolerance](fault-tolerance-cheatsheet.md), [Observability](observability-cheatsheet.md), and [Spring Boot Production](spring-boot-production-cheatsheet.md)
-7. **Before performance tuning** → Read [JVM Tuning](jvm-tuning-performance-cheatsheet.md) and [MongoDB Optimization](mongodb-spring-data-cheatsheet.md)
-8. **Before writing tests** → Read [Testing Strategy](testing-strategy-cheatsheet.md)
+### By Development Phase
+
+1. **Before designing a new service** → [Clean Architecture](clean-hexagonal-architecture-cheatsheet.md) + [Code Quality](code-quality-cheatsheet.md)
+2. **Before designing an API** → [REST API Design](rest-api-design-cheatsheet.md) + [API Error Handling](api-error-handling-cheatsheet.md)
+3. **Before applying a design pattern** → [Design Patterns Decision Guide](design-patterns-decision-guide.md)
+4. **Before adding async communication** → [Event-Driven Architecture](event-driven-architecture-cheatsheet.md) + [Kafka Patterns](kafka-patterns-cheatsheet.md)
+5. **Before writing concurrent code** → [Java Concurrency & Virtual Threads](java-concurrency-virtual-threads-cheatsheet.md)
+6. **Before writing data pipelines** → [Java Streams & Functional](java-streams-functional-cheatsheet.md)
+7. **Before configuring Spring** → [Spring DI & Bean Lifecycle](spring-di-bean-lifecycle-cheatsheet.md)
+8. **Before setting up the build** → [Gradle Build Patterns](gradle-build-plugin-patterns-cheatsheet.md)
+9. **Before writing tests** → [Testing Strategy](testing-strategy-cheatsheet.md)
+10. **Before submitting a PR** → [Code Review Checklist](code-review-checklist.md)
+
+### By Production Deployment
+
+1. **Before containerizing** → [Docker & Kubernetes Patterns](docker-kubernetes-patterns-cheatsheet.md)
+2. **Before going to production** → [Fault Tolerance](fault-tolerance-cheatsheet.md) + [Observability](observability-cheatsheet.md) + [Spring Boot Production](spring-boot-production-cheatsheet.md)
+3. **Before handling incidents** → [Incident Response Runbook](incident-response-runbook-cheatsheet.md)
+4. **Before performance tuning** → [JVM Tuning](jvm-tuning-performance-cheatsheet.md)
+
+### By Use Case
+
+- **Working with distributed systems** → [Distributed Locking](distributed-locking-cheatsheet.md)
+- **Making architecture decisions** → [ADR Template](adr-template-cheatsheet.md)
+- **Setting up team workflows** → [Git Workflow & Branching](git-workflow-branching-cheatsheet.md)
+- **Using modern Java features** → [Modern Java Quick Reference](modern-java-features-quick-reference.md)
+- **Configuring AI assistants** → [GitHub Copilot Instructions](github-copilot-enterprise-cheatsheet.md)
 
 ---
 
 ## 📝 Contributing
 
 These cheatsheets are living documents. Update them as:
+
 - New patterns emerge
 - Technology versions change
 - Production lessons are learned
