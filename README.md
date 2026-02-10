@@ -70,6 +70,9 @@ A collection of production-ready cheatsheets for building scalable, resilient, d
 - [**Docker & Kubernetes Patterns**](docker-kubernetes-patterns-cheatsheet.md)
   Production container patterns for Java services. Dockerfiles, K8s manifests, health probes, resource management, and deployment strategies.
 
+- [**Red Hat OpenShift**](openshift-cheatsheet.md)
+  Production patterns for deploying and operating Java services on OpenShift. Builds, deployments, routes, security contexts, and OpenShift-specific features.
+
 - [**Incident Response & Runbook Template**](incident-response-runbook-cheatsheet.md)
   Standardized incident response playbook, investigation framework, and runbook templates for distributed Java services.
 
@@ -148,6 +151,7 @@ All cheatsheets are designed for:
 ### By Use Case
 
 - **Working with distributed systems** → [Distributed Locking](distributed-locking-cheatsheet.md)
+- **Deploying to OpenShift** → [Red Hat OpenShift](openshift-cheatsheet.md)
 - **Making architecture decisions** → [ADR Template](adr-template-cheatsheet.md)
 - **Setting up team workflows** → [Git Workflow & Branching](git-workflow-branching-cheatsheet.md)
 - **Using modern Java features** → [Modern Java Quick Reference](modern-java-features-quick-reference.md)
