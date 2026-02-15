@@ -3,7 +3,7 @@
 A comprehensive collection of production-ready **cheatsheets** and in-depth **guides** for building scalable, resilient, distributed systems with Java 21+, Spring Boot 3.x, Kafka, MongoDB, and modern cloud infrastructure.
 
 - **26 Cheatsheets** — Quick-reference material for fast decision-making and pattern lookup
-- **36 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
+- **37 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
 
 ---
 
@@ -117,6 +117,7 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 - [**Java Functional Interfaces**](guides/java-functional-interfaces-guide.md) — Lambdas, method references, custom interfaces
 - [**Java Enums Deep Dive**](guides/java-enum-guide.md) — Enum patterns, EnumSet, EnumMap, state machines
 - [**Modern Java Concurrency**](guides/modern-java-concurrency-guide.md) — Thread safety, virtual threads, structured concurrency
+- [**Java Concurrency Utilities**](guides/java-concurrency-utilities-guide.md) — CountDownLatch, CyclicBarrier, Semaphore, locks, concurrent collections
 - [**CompletableFuture Mastery**](guides/completable-future-guide.md) — Asynchronous programming patterns
 
 **Spring & Security:**
@@ -146,7 +147,7 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 - [**Modern MongoDB Queries**](guides/mongodb-query-guide.md) — Queries, aggregations, and optimization
 - [**Modern Redis with Lettuce**](guides/redis-lettuce-guide.md) — Caching patterns and distributed locks
 
-[**→ View All Guides**](guides/README.md) — 36 comprehensive tutorials covering Java, Spring, architecture, security, testing, data, messaging, resilience, infrastructure, and tooling
+[**→ View All Guides**](guides/README.md) — 37 comprehensive tutorials covering Java, Spring, architecture, security, testing, data, messaging, resilience, infrastructure, and tooling
 
 ---
 

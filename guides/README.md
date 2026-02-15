@@ -26,6 +26,9 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**CompletableFuture Mastery**](completable-future-guide.md)
   Deep dive into asynchronous programming with CompletableFuture. Creating, chaining, combining, error handling, and advanced patterns.
 
+- [**Java Concurrency Utilities**](java-concurrency-utilities-guide.md)
+  Master Java concurrency utilities including synchronizers (CountDownLatch, CyclicBarrier, Semaphore, Phaser), locks (ReentrantLock, ReadWriteLock, StampedLock), concurrent collections, and atomic variables.
+
 - [**Modern Java Date/Time API**](modern-java-datetime-guide.md)
   Complete guide to the java.time API (Java 8+). LocalDate, LocalDateTime, ZonedDateTime, Duration, Period, and timezone handling.
 
@@ -170,7 +173,8 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 5. [Modern Java Date/Time API](modern-java-datetime-guide.md)
 6. [Exception Design and Handling](exception-design-guide.md)
 7. [Modern Java Concurrency](modern-java-concurrency-guide.md)
-8. [CompletableFuture Mastery](completable-future-guide.md)
+8. [Java Concurrency Utilities](java-concurrency-utilities-guide.md)
+9. [CompletableFuture Mastery](completable-future-guide.md)
 
 **Path 3: Distributed Systems Developer**
 
@@ -239,6 +243,7 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - **Domain-Driven Design** → Start with [Domain-Driven Design Guide](domain-driven-design-guide.md)
 - **Asynchronous programming** → Start with [CompletableFuture Mastery](completable-future-guide.md)
 - **Virtual threads & modern concurrency** → Start with [Modern Java Concurrency](modern-java-concurrency-guide.md)
+- **Java concurrency utilities** → Start with [Java Concurrency Utilities](java-concurrency-utilities-guide.md)
 - **Reactive programming** → Start with [Spring WebFlux & Reactive](spring-webflux-reactive-guide.md)
 - **Event-driven systems** → Start with [Event-Driven Architecture](event-driven-architecture-guide.md)
 - **Distributed transactions & sagas** → Start with [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
