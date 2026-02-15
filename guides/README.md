@@ -107,6 +107,9 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**Apache Flink 2.0**](apache-flink-guide.md)
   Master stream and batch processing with Apache Flink 2.0. DataStream API, windowing, state management, checkpointing, watermarks, Table API/SQL, connectors, exactly-once semantics, and performance optimization.
 
+- [**Flink Checkpointing and Operators**](flink-checkpointing-guide.md)
+  Deep dive into Flink checkpointing configuration, state backends, aligned vs unaligned checkpoints, synchronous vs asynchronous operators, barrier alignment, incremental checkpoints, savepoints, and performance optimization.
+
 ### 🔧 Infrastructure & Operations
 
 - [**Docker & Kubernetes for Java Services**](docker-kubernetes-guide.md)
@@ -195,11 +198,12 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 3. [Kafka Backpressure Handling](kafka-backpressure-guide.md)
 4. [Kafka Zero Message Loss](kafka-zero-loss-guide.md)
 5. [Apache Flink 2.0](apache-flink-guide.md)
-6. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
-7. [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
-8. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
-9. [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
-10. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
+6. [Flink Checkpointing and Operators](flink-checkpointing-guide.md)
+7. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
+8. [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
+9. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
+10. [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
+11. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
 
 **Path 4: Spring Framework Mastery**
 
@@ -218,9 +222,10 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 **Path 6: Data Engineering**
 
 1. [Apache Flink 2.0](apache-flink-guide.md)
-2. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
-3. [Modern Redis with Lettuce](redis-lettuce-guide.md)
-4. [Database Migration & Schema Evolution](database-migration-guide.md)
+2. [Flink Checkpointing and Operators](flink-checkpointing-guide.md)
+3. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
+4. [Modern Redis with Lettuce](redis-lettuce-guide.md)
+5. [Database Migration & Schema Evolution](database-migration-guide.md)
 
 **Path 7: Performance Engineering**
 
@@ -271,6 +276,7 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - **Kafka backpressure & consumer lag** → Start with [Kafka Backpressure Handling](kafka-backpressure-guide.md)
 - **Kafka zero message loss** → Start with [Kafka Zero Message Loss](kafka-zero-loss-guide.md)
 - **Apache Flink stream processing** → Start with [Apache Flink 2.0](apache-flink-guide.md)
+- **Flink checkpointing & fault tolerance** → Start with [Flink Checkpointing and Operators](flink-checkpointing-guide.md)
 - **Project Reactor & reactive streams** → Start with [Project Reactor](project-reactor-guide.md)
 - **Spring Boot production** → Start with [Spring Boot Production Mastery](spring-boot-production-guide.md)
 - **Spring Security** → Start with [Spring Security Complete Guide](spring-security-guide.md)
