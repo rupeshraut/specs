@@ -22,8 +22,39 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 ### 🧩 Design & Architecture
 
+- [**Clean & Hexagonal Architecture Deep Dive**](clean-architecture-guide.md)
+  Comprehensive guide to implementing Clean and Hexagonal Architecture. Domain layer, ports & adapters, dependency rules, package structure, and migration patterns.
+
+- [**Domain-Driven Design (DDD) Complete Guide**](domain-driven-design-guide.md)
+  Strategic and tactical DDD patterns. Bounded contexts, aggregates, entities, value objects, domain events, and ubiquitous language.
+
 - [**Design Patterns Decision Tree**](design-patterns-decision-tree.md)
   Interactive guide to choosing the right design pattern for your scenario. Covers creational, structural, and behavioral patterns with decision flows.
+
+- [**Event-Driven Architecture Mastery**](event-driven-architecture-guide.md)
+  Comprehensive guide to designing event-driven systems. Sagas, event sourcing, CQRS, outbox pattern, idempotency, and distributed patterns.
+
+- [**Distributed Transactions & Consistency**](distributed-transactions-consistency-guide.md)
+  Complete guide to distributed transactions, saga pattern, eventual consistency, CAP theorem, outbox pattern, idempotency, and compensating transactions.
+
+### 🌐 API Design & Integration
+
+- [**REST API Design & Implementation**](rest-api-design-guide.md)
+  Production-grade REST API design patterns. Resource modeling, HTTP methods, status codes, pagination, versioning, HATEOAS, OpenAPI documentation, and best practices.
+
+- [**API Gateway & Service Mesh Patterns**](api-gateway-service-mesh-guide.md)
+  Comprehensive guide to API gateways and service mesh. Spring Cloud Gateway, Istio patterns, traffic management, mTLS security, rate limiting, and circuit breaking.
+
+### 🌱 Spring Framework
+
+- [**Spring Security Complete Guide**](spring-security-guide.md)
+  Production-grade Spring Security with OAuth2, JWT, method security, and authentication patterns. CORS, CSRF, session management, and security best practices.
+
+- [**Spring WebFlux & Reactive Programming**](spring-webflux-reactive-guide.md)
+  Comprehensive guide to reactive programming with Spring WebFlux and Project Reactor. Mono, Flux, reactive WebClient, backpressure, and performance patterns.
+
+- [**Spring Boot Production Mastery**](spring-boot-production-guide.md)
+  Production-ready Spring Boot configuration, application lifecycle, actuator deep dive, graceful shutdown, startup optimization, and operational patterns.
 
 ### 🧪 Testing
 
@@ -38,10 +69,24 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**Modern Redis with Lettuce**](redis-lettuce-guide.md)
   Mastering Redis with Lettuce client and Spring Data Redis. Caching patterns, data structures, pub/sub, distributed locks, and performance tuning.
 
+- [**Database Migration & Schema Evolution**](database-migration-guide.md)
+  Complete guide to Flyway and Liquibase. Zero-downtime migrations, rollback strategies, testing migrations, and production deployment patterns.
+
 ### 🔥 Messaging & Events
+
+- [**Apache Kafka Deep Dive**](kafka-deep-dive-guide.md)
+  Comprehensive guide to Kafka internals, architecture, producer/consumer configuration, exactly-once semantics, Kafka Streams, performance tuning, and operations.
 
 - [**Kafka Serialization & Deserialization**](kafka-serialization-guide.md)
   Complete guide to Kafka serialization, schema management, and data evolution. Avro, JSON, Protobuf, Schema Registry, and compatibility strategies.
+
+### 🔧 Infrastructure & Operations
+
+- [**Docker & Kubernetes for Java Services**](docker-kubernetes-guide.md)
+  Comprehensive guide to containerizing and orchestrating Java applications. Multi-stage builds, health probes, resource management, deployment strategies, and production patterns.
+
+- [**Observability Engineering**](observability-engineering-guide.md)
+  Production-grade observability with metrics, logging, and tracing. Micrometer, distributed tracing, structured logging, SLI/SLO/SLA, alerting strategies, and dashboards.
 
 ### 🛡️ Resilience & Reliability
 
@@ -54,6 +99,17 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**Resilience4j - Programmatic Usage**](resilience4j-programmatic-guide.md)
   Using Resilience4j without Spring framework. Standalone setup and programmatic configuration for non-Spring applications.
 
+- [**Chaos Engineering for Java**](chaos-engineering-guide.md)
+  Production chaos engineering practices with Chaos Monkey, Chaos Toolkit, Litmus Chaos. Simulating failures, testing resilience patterns, game days, and safe production chaos.
+
+### 🔒 Security
+
+- [**Application Security Guide**](application-security-guide.md)
+  Comprehensive security guide covering OWASP Top 10, injection prevention, authentication, authorization, cryptography, dependency security, and production hardening.
+
+- [**Secrets Management & Configuration**](secrets-management-guide.md)
+  Complete guide to managing secrets with HashiCorp Vault, AWS Secrets Manager, Spring Cloud Config, Kubernetes Secrets, secret rotation, and encryption patterns.
+
 ### 🛠️ Development Tools & Practices
 
 - [**Modern Git Usage**](git-modern-guide.md)
@@ -61,6 +117,14 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 - [**Java Application Profiling**](java-profiling-guide.md)
   Complete guide to profiling Java applications. JFR (Java Flight Recorder), Async Profiler, GC log analysis, and performance investigation techniques.
+
+### ⚡ Performance & Optimization
+
+- [**JVM Performance Engineering**](jvm-performance-engineering-guide.md)
+  Comprehensive guide to JVM performance tuning. GC algorithms (G1GC, ZGC, Shenandoah), memory management, heap analysis, thread profiling, container-aware JVM, and production optimization.
+
+- [**Performance Testing Mastery**](performance-testing-guide.md)
+  Complete guide to performance testing with JMeter, Gatling, and K6. Load testing, stress testing, spike testing, soak testing, metrics analysis, and CI/CD integration patterns.
 
 ---
 
@@ -78,33 +142,72 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 ### Learning Paths
 
-**Path 1: Java Fundamentals Mastery**
+**Path 1: Architecture & Design Mastery**
+
+1. [Clean & Hexagonal Architecture Deep Dive](clean-architecture-guide.md)
+2. [Domain-Driven Design Complete Guide](domain-driven-design-guide.md)
+3. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
+4. [Design Patterns Decision Tree](design-patterns-decision-tree.md)
+
+**Path 2: Java Fundamentals Mastery**
 
 1. [Modern Java Date/Time API](modern-java-datetime-guide.md)
 2. [Exception Design and Handling](exception-design-guide.md)
 3. [Modern Java Concurrency](modern-java-concurrency-guide.md)
 4. [CompletableFuture Mastery](completable-future-guide.md)
 
-**Path 2: Distributed Systems Developer**
+**Path 3: Distributed Systems Developer**
 
-1. [Kafka Serialization & Deserialization](kafka-serialization-guide.md)
-2. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
-3. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
-4. [Modern Redis with Lettuce](redis-lettuce-guide.md)
+1. [Apache Kafka Deep Dive](kafka-deep-dive-guide.md)
+2. [Kafka Serialization & Deserialization](kafka-serialization-guide.md)
+3. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
+4. [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
+5. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
+6. [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
+7. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
 
-**Path 3: Quality & Best Practices**
+**Path 4: Spring Framework Mastery**
+
+1. [Spring Boot Production Mastery](spring-boot-production-guide.md)
+2. [Spring Security Complete Guide](spring-security-guide.md)
+3. [Spring WebFlux & Reactive Programming](spring-webflux-reactive-guide.md)
+
+**Path 5: Quality & Best Practices**
 
 1. [Design Patterns Decision Tree](design-patterns-decision-tree.md)
 2. [Exception Design and Handling](exception-design-guide.md)
 3. [Modern Java Unit Testing](modern-java-testing-guide.md)
 4. [Modern Git Usage](git-modern-guide.md)
 
-**Path 4: Performance Engineering**
+**Path 6: Data Engineering**
 
-1. [Java Application Profiling](java-profiling-guide.md)
-2. [Modern Java Concurrency](modern-java-concurrency-guide.md)
-3. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
-4. [Modern Redis with Lettuce](redis-lettuce-guide.md)
+1. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
+2. [Modern Redis with Lettuce](redis-lettuce-guide.md)
+3. [Database Migration & Schema Evolution](database-migration-guide.md)
+
+**Path 7: Performance Engineering**
+
+1. [JVM Performance Engineering](jvm-performance-engineering-guide.md)
+2. [Performance Testing Mastery](performance-testing-guide.md)
+3. [Java Application Profiling](java-profiling-guide.md)
+4. [Modern Java Concurrency](modern-java-concurrency-guide.md)
+5. [Apache Kafka Deep Dive](kafka-deep-dive-guide.md)
+6. [Spring Boot Production Mastery](spring-boot-production-guide.md)
+
+**Path 8: DevOps & SRE**
+
+1. [Docker & Kubernetes for Java Services](docker-kubernetes-guide.md)
+2. [Observability Engineering](observability-engineering-guide.md)
+3. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
+4. [Chaos Engineering for Java](chaos-engineering-guide.md)
+5. [Database Migration & Schema Evolution](database-migration-guide.md)
+
+**Path 9: Security Engineering**
+
+1. [Application Security Guide](application-security-guide.md)
+2. [Secrets Management & Configuration](secrets-management-guide.md)
+3. [Spring Security Complete Guide](spring-security-guide.md)
+4. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
 
 ---
 
@@ -112,14 +215,32 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 ### I want to learn...
 
+- **Clean/Hexagonal Architecture** → Start with [Clean Architecture Deep Dive](clean-architecture-guide.md)
+- **Domain-Driven Design** → Start with [Domain-Driven Design Guide](domain-driven-design-guide.md)
 - **Asynchronous programming** → Start with [CompletableFuture Mastery](completable-future-guide.md)
 - **Virtual threads & modern concurrency** → Start with [Modern Java Concurrency](modern-java-concurrency-guide.md)
+- **Reactive programming** → Start with [Spring WebFlux & Reactive](spring-webflux-reactive-guide.md)
+- **Event-driven systems** → Start with [Event-Driven Architecture](event-driven-architecture-guide.md)
+- **Distributed transactions & sagas** → Start with [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
+- **REST API design** → Start with [REST API Design & Implementation](rest-api-design-guide.md)
+- **API Gateway & Service Mesh** → Start with [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
+- **Apache Kafka internals** → Start with [Apache Kafka Deep Dive](kafka-deep-dive-guide.md)
+- **Kafka serialization** → Start with [Kafka Serialization](kafka-serialization-guide.md)
+- **Spring Boot production** → Start with [Spring Boot Production Mastery](spring-boot-production-guide.md)
+- **Spring Security** → Start with [Spring Security Complete Guide](spring-security-guide.md)
 - **Design patterns** → Start with [Design Patterns Decision Tree](design-patterns-decision-tree.md)
 - **Testing best practices** → Start with [Modern Java Unit Testing](modern-java-testing-guide.md)
-- **Kafka data handling** → Start with [Kafka Serialization](kafka-serialization-guide.md)
 - **Building resilient systems** → Start with [Resilience4j Complete Guide](resilience4j-complete-guide.md)
+- **Chaos engineering** → Start with [Chaos Engineering for Java](chaos-engineering-guide.md)
+- **Application security** → Start with [Application Security Guide](application-security-guide.md)
+- **Secrets management** → Start with [Secrets Management & Configuration](secrets-management-guide.md)
 - **MongoDB optimization** → Start with [MongoDB Query Patterns](mongodb-query-guide.md)
 - **Redis caching** → Start with [Redis with Lettuce](redis-lettuce-guide.md)
+- **Database migrations** → Start with [Database Migration & Schema Evolution](database-migration-guide.md)
+- **Docker & Kubernetes** → Start with [Docker & Kubernetes for Java](docker-kubernetes-guide.md)
+- **Observability & monitoring** → Start with [Observability Engineering](observability-engineering-guide.md)
+- **JVM performance tuning** → Start with [JVM Performance Engineering](jvm-performance-engineering-guide.md)
+- **Load and performance testing** → Start with [Performance Testing Mastery](performance-testing-guide.md)
 - **Git mastery** → Start with [Modern Git Usage](git-modern-guide.md)
 - **Performance troubleshooting** → Start with [Java Profiling](java-profiling-guide.md)
 

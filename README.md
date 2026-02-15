@@ -3,7 +3,7 @@
 A comprehensive collection of production-ready **cheatsheets** and in-depth **guides** for building scalable, resilient, distributed systems with Java 21+, Spring Boot 3.x, Kafka, MongoDB, and modern cloud infrastructure.
 
 - **26 Cheatsheets** — Quick-reference material for fast decision-making and pattern lookup
-- **14 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
+- **24 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
 
 ---
 
@@ -111,6 +111,11 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 
 ### Featured Guides
 
+- [**Spring Security Complete Guide**](guides/spring-security-guide.md) — OAuth2, JWT, method security, authentication
+- [**Event-Driven Architecture Mastery**](guides/event-driven-architecture-guide.md) — Sagas, event sourcing, CQRS, outbox pattern
+- [**Docker & Kubernetes for Java**](guides/docker-kubernetes-guide.md) — Containerization, orchestration, production patterns
+- [**Observability Engineering**](guides/observability-engineering-guide.md) — Metrics, logging, tracing, SLI/SLO/SLA
+- [**Spring WebFlux & Reactive**](guides/spring-webflux-reactive-guide.md) — Reactive programming with Project Reactor
 - [**Modern Java Concurrency**](guides/modern-java-concurrency-guide.md) — Thread safety, virtual threads, structured concurrency
 - [**CompletableFuture Mastery**](guides/completable-future-guide.md) — Asynchronous programming patterns
 - [**Resilience4j Complete Guide**](guides/resilience4j-complete-guide.md) — Building resilient distributed systems
@@ -122,7 +127,7 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 - [**Java Profiling**](guides/java-profiling-guide.md) — JFR, Async Profiler, performance analysis
 - [**Modern Git Usage**](guides/git-modern-guide.md) — Workflows and team collaboration
 
-[**→ View All Guides**](guides/README.md) — 14 comprehensive tutorials covering Java, testing, data, messaging, resilience, and tooling
+[**→ View All Guides**](guides/README.md) — 24 comprehensive tutorials covering Java, Spring, architecture, testing, data, messaging, resilience, infrastructure, and tooling
 
 ---
 
@@ -204,6 +209,11 @@ All cheatsheets are designed for:
 
 ### For Deep Learning (Guides)
 
+- **Securing Spring applications** → [Spring Security Guide](guides/spring-security-guide.md)
+- **Building event-driven systems** → [Event-Driven Architecture Guide](guides/event-driven-architecture-guide.md)
+- **Deploying to Kubernetes** → [Docker & Kubernetes Guide](guides/docker-kubernetes-guide.md)
+- **Implementing observability** → [Observability Engineering Guide](guides/observability-engineering-guide.md)
+- **Learning reactive programming** → [Spring WebFlux Guide](guides/spring-webflux-reactive-guide.md)
 - **Mastering async programming** → [CompletableFuture Guide](guides/completable-future-guide.md)
 - **Learning virtual threads** → [Modern Java Concurrency Guide](guides/modern-java-concurrency-guide.md)
 - **Understanding Kafka serialization** → [Kafka Serialization Guide](guides/kafka-serialization-guide.md)
