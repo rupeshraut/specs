@@ -11,6 +11,15 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**Effective Java Generics**](java-generics-guide.md)
   Master Java generics from fundamentals to advanced patterns. Type parameters, bounds, wildcards, PECS principle, type erasure, generics with records and sealed types, and modern Java features.
 
+- [**Java Optional Mastery**](java-optional-guide.md)
+  Complete guide to using Optional effectively. Creating, transforming, chaining, best practices, and avoiding common pitfalls with null-safe programming.
+
+- [**Java Functional Interfaces**](java-functional-interfaces-guide.md)
+  Comprehensive guide to functional interfaces and lambda expressions. Predicate, Function, Consumer, Supplier, custom functional interfaces, and method references.
+
+- [**Java Enums Deep Dive**](java-enum-guide.md)
+  Master Java enums from basics to advanced patterns. Enum methods, EnumSet, EnumMap, strategy pattern with enums, and state machines.
+
 - [**Modern Java Concurrency**](modern-java-concurrency-guide.md)
   Comprehensive guide to concurrency in modern Java (Java 8 through Java 21+). Covers thread safety, virtual threads, structured concurrency, and async patterns.
 
@@ -155,10 +164,13 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 **Path 2: Java Fundamentals Mastery**
 
 1. [Effective Java Generics](java-generics-guide.md)
-2. [Modern Java Date/Time API](modern-java-datetime-guide.md)
-3. [Exception Design and Handling](exception-design-guide.md)
-4. [Modern Java Concurrency](modern-java-concurrency-guide.md)
-5. [CompletableFuture Mastery](completable-future-guide.md)
+2. [Java Optional Mastery](java-optional-guide.md)
+3. [Java Functional Interfaces](java-functional-interfaces-guide.md)
+4. [Java Enums Deep Dive](java-enum-guide.md)
+5. [Modern Java Date/Time API](modern-java-datetime-guide.md)
+6. [Exception Design and Handling](exception-design-guide.md)
+7. [Modern Java Concurrency](modern-java-concurrency-guide.md)
+8. [CompletableFuture Mastery](completable-future-guide.md)
 
 **Path 3: Distributed Systems Developer**
 
@@ -220,6 +232,9 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 ### I want to learn...
 
 - **Java generics effectively** → Start with [Effective Java Generics](java-generics-guide.md)
+- **Java Optional best practices** → Start with [Java Optional Mastery](java-optional-guide.md)
+- **Functional interfaces & lambdas** → Start with [Java Functional Interfaces](java-functional-interfaces-guide.md)
+- **Java enums and patterns** → Start with [Java Enums Deep Dive](java-enum-guide.md)
 - **Clean/Hexagonal Architecture** → Start with [Clean Architecture Deep Dive](clean-architecture-guide.md)
 - **Domain-Driven Design** → Start with [Domain-Driven Design Guide](domain-driven-design-guide.md)
 - **Asynchronous programming** → Start with [CompletableFuture Mastery](completable-future-guide.md)

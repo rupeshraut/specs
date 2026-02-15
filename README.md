@@ -3,7 +3,7 @@
 A comprehensive collection of production-ready **cheatsheets** and in-depth **guides** for building scalable, resilient, distributed systems with Java 21+, Spring Boot 3.x, Kafka, MongoDB, and modern cloud infrastructure.
 
 - **26 Cheatsheets** — Quick-reference material for fast decision-making and pattern lookup
-- **24 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
+- **36 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
 
 ---
 
@@ -111,23 +111,42 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 
 ### Featured Guides
 
-- [**Spring Security Complete Guide**](guides/spring-security-guide.md) — OAuth2, JWT, method security, authentication
-- [**Event-Driven Architecture Mastery**](guides/event-driven-architecture-guide.md) — Sagas, event sourcing, CQRS, outbox pattern
-- [**Docker & Kubernetes for Java**](guides/docker-kubernetes-guide.md) — Containerization, orchestration, production patterns
-- [**Observability Engineering**](guides/observability-engineering-guide.md) — Metrics, logging, tracing, SLI/SLO/SLA
-- [**Spring WebFlux & Reactive**](guides/spring-webflux-reactive-guide.md) — Reactive programming with Project Reactor
+**Core Java & Fundamentals:**
+- [**Effective Java Generics**](guides/java-generics-guide.md) — Type safety, PECS, wildcards, advanced patterns
+- [**Java Optional Mastery**](guides/java-optional-guide.md) — Null-safe programming, transformations, best practices
+- [**Java Functional Interfaces**](guides/java-functional-interfaces-guide.md) — Lambdas, method references, custom interfaces
+- [**Java Enums Deep Dive**](guides/java-enum-guide.md) — Enum patterns, EnumSet, EnumMap, state machines
 - [**Modern Java Concurrency**](guides/modern-java-concurrency-guide.md) — Thread safety, virtual threads, structured concurrency
 - [**CompletableFuture Mastery**](guides/completable-future-guide.md) — Asynchronous programming patterns
+
+**Spring & Security:**
+- [**Spring Security Complete Guide**](guides/spring-security-guide.md) — OAuth2, JWT, method security, authentication
+- [**Spring WebFlux & Reactive**](guides/spring-webflux-reactive-guide.md) — Reactive programming with Project Reactor
+- [**Application Security Guide**](guides/application-security-guide.md) — OWASP Top 10, injection prevention, cryptography
+- [**Secrets Management**](guides/secrets-management-guide.md) — Vault, AWS Secrets Manager, secure configuration
+
+**Architecture & Distributed Systems:**
+- [**Event-Driven Architecture Mastery**](guides/event-driven-architecture-guide.md) — Sagas, event sourcing, CQRS, outbox pattern
+- [**Distributed Transactions & Consistency**](guides/distributed-transactions-consistency-guide.md) — Saga pattern, CAP theorem, eventual consistency
+- [**REST API Design & Implementation**](guides/rest-api-design-guide.md) — Resource modeling, versioning, OpenAPI
+- [**API Gateway & Service Mesh**](guides/api-gateway-service-mesh-guide.md) — Spring Cloud Gateway, Istio patterns
+
+**Resilience & Testing:**
 - [**Resilience4j Complete Guide**](guides/resilience4j-complete-guide.md) — Building resilient distributed systems
+- [**Chaos Engineering for Java**](guides/chaos-engineering-guide.md) — Chaos Monkey, testing resilience, game days
+- [**Performance Testing Mastery**](guides/performance-testing-guide.md) — JMeter, Gatling, K6, load testing
+
+**Infrastructure & Performance:**
+- [**Docker & Kubernetes for Java**](guides/docker-kubernetes-guide.md) — Containerization, orchestration, production patterns
+- [**JVM Performance Engineering**](guides/jvm-performance-engineering-guide.md) — GC tuning, memory management, profiling
+- [**Observability Engineering**](guides/observability-engineering-guide.md) — Metrics, logging, tracing, SLI/SLO/SLA
+
+**Data & Messaging:**
 - [**Kafka Serialization**](guides/kafka-serialization-guide.md) — Schema management and data evolution
 - [**Modern MongoDB Queries**](guides/mongodb-query-guide.md) — Queries, aggregations, and optimization
 - [**Modern Redis with Lettuce**](guides/redis-lettuce-guide.md) — Caching patterns and distributed locks
-- [**Modern Java Testing**](guides/modern-java-testing-guide.md) — JUnit 5, Mockito, AssertJ, Testcontainers
-- [**Design Patterns Decision Tree**](guides/design-patterns-decision-tree.md) — Choosing the right pattern
-- [**Java Profiling**](guides/java-profiling-guide.md) — JFR, Async Profiler, performance analysis
-- [**Modern Git Usage**](guides/git-modern-guide.md) — Workflows and team collaboration
 
-[**→ View All Guides**](guides/README.md) — 24 comprehensive tutorials covering Java, Spring, architecture, testing, data, messaging, resilience, infrastructure, and tooling
+[**→ View All Guides**](guides/README.md) — 36 comprehensive tutorials covering Java, Spring, architecture, security, testing, data, messaging, resilience, infrastructure, and tooling
 
 ---
 
