@@ -8,6 +8,9 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 ### ☕ Java Language & Core APIs
 
+- [**Effective Java Generics**](java-generics-guide.md)
+  Master Java generics from fundamentals to advanced patterns. Type parameters, bounds, wildcards, PECS principle, type erasure, generics with records and sealed types, and modern Java features.
+
 - [**Modern Java Concurrency**](modern-java-concurrency-guide.md)
   Comprehensive guide to concurrency in modern Java (Java 8 through Java 21+). Covers thread safety, virtual threads, structured concurrency, and async patterns.
 
@@ -151,10 +154,11 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 **Path 2: Java Fundamentals Mastery**
 
-1. [Modern Java Date/Time API](modern-java-datetime-guide.md)
-2. [Exception Design and Handling](exception-design-guide.md)
-3. [Modern Java Concurrency](modern-java-concurrency-guide.md)
-4. [CompletableFuture Mastery](completable-future-guide.md)
+1. [Effective Java Generics](java-generics-guide.md)
+2. [Modern Java Date/Time API](modern-java-datetime-guide.md)
+3. [Exception Design and Handling](exception-design-guide.md)
+4. [Modern Java Concurrency](modern-java-concurrency-guide.md)
+5. [CompletableFuture Mastery](completable-future-guide.md)
 
 **Path 3: Distributed Systems Developer**
 
@@ -215,6 +219,7 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 ### I want to learn...
 
+- **Java generics effectively** → Start with [Effective Java Generics](java-generics-guide.md)
 - **Clean/Hexagonal Architecture** → Start with [Clean Architecture Deep Dive](clean-architecture-guide.md)
 - **Domain-Driven Design** → Start with [Domain-Driven Design Guide](domain-driven-design-guide.md)
 - **Asynchronous programming** → Start with [CompletableFuture Mastery](completable-future-guide.md)
