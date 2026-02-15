@@ -1,23 +1,25 @@
-# Effective Java Generics with Modern Java
+# Effective Modern Java Generics
 
-A comprehensive guide to mastering Java generics from fundamentals to advanced patterns, including modern Java features and production-ready best practices.
+A comprehensive guide to mastering Java generics, type safety, advanced patterns, and best practices.
 
 ---
 
 ## Table of Contents
 
 1. [Generics Fundamentals](#generics-fundamentals)
-2. [Type Parameters and Bounds](#type-parameters-and-bounds)
-3. [Wildcards Deep Dive](#wildcards-deep-dive)
-4. [PECS Principle](#pecs-principle)
-5. [Generic Methods](#generic-methods)
-6. [Type Erasure](#type-erasure)
-7. [Generics with Records](#generics-with-records)
-8. [Generics with Sealed Types](#generics-with-sealed-types)
-9. [Generics and Pattern Matching](#generics-and-pattern-matching)
+2. [Type Parameters and Naming](#type-parameters-and-naming)
+3. [Generic Classes and Interfaces](#generic-classes-and-interfaces)
+4. [Generic Methods](#generic-methods)
+5. [Bounded Type Parameters](#bounded-type-parameters)
+6. [Wildcards](#wildcards)
+7. [PECS Principle](#pecs-principle)
+8. [Type Erasure](#type-erasure)
+9. [Generic Collections](#generic-collections)
 10. [Advanced Patterns](#advanced-patterns)
-11. [Common Pitfalls](#common-pitfalls)
-12. [Best Practices](#best-practices)
+11. [Recursive Type Bounds](#recursive-type-bounds)
+12. [Type Inference](#type-inference)
+13. [Common Pitfalls](#common-pitfalls)
+14. [Best Practices](#best-practices)
 
 ---
 
@@ -25,382 +27,218 @@ A comprehensive guide to mastering Java generics from fundamentals to advanced p
 
 ### Why Generics?
 
+**Before Generics (Java 1.4):**
+
 ```java
-// ❌ Before Generics (pre-Java 5)
+// ❌ No type safety
 List list = new ArrayList();
 list.add("String");
-list.add(42); // Oops! No type safety
+list.add(42);
+list.add(new Date());
 
-String str = (String) list.get(0); // Explicit cast required
-String num = (String) list.get(1); // ClassCastException at runtime!
-
-// ✅ With Generics (Java 5+)
-List<String> list = new ArrayList<>();
-list.add("String");
-// list.add(42); // Compile-time error - type safety!
-
-String str = list.get(0); // No cast needed
+String str = (String) list.get(0);  // Manual casting
+String str2 = (String) list.get(1); // ClassCastException at runtime!
 ```
 
-### Generic Classes
+**With Generics (Java 5+):**
 
 ```java
-// Basic generic class
-public class Box<T> {
+// ✅ Type safety at compile time
+List<String> list = new ArrayList<>();
+list.add("String");
+// list.add(42);  // Compile error!
+
+String str = list.get(0);  // No casting needed
+```
+
+**Benefits:**
+- **Type Safety**: Catch errors at compile time
+- **No Casting**: Cleaner, more readable code
+- **Reusability**: Write once, use with any type
+- **Documentation**: Types are self-documenting
+
+---
+
+## Type Parameters and Naming
+
+### Naming Conventions
+
+```java
+/**
+ * Standard Type Parameter Names:
+ * 
+ * E - Element (used extensively by Java Collections Framework)
+ * K - Key (Map keys)
+ * V - Value (Map values)
+ * N - Number
+ * T - Type
+ * S, U, V - 2nd, 3rd, 4th types
+ */
+
+// Examples
+class Box<T> { }                           // Generic type
+interface Map<K, V> { }                    // Key-Value pair
+class Pair<S, T> { }                       // Two types
+interface Comparable<T> { }                // Type to compare with
+class ArrayList<E> implements List<E> { } // Element type
+```
+
+### Single vs Multiple Type Parameters
+
+```java
+// Single type parameter
+public class Container<T> {
     private T value;
-
-    public Box(T value) {
+    
+    public void set(T value) {
         this.value = value;
     }
-
-    public T getValue() {
+    
+    public T get() {
         return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
     }
 }
 
-// Usage
-Box<String> stringBox = new Box<>("Hello");
-Box<Integer> intBox = new Box<>(42);
-
-String str = stringBox.getValue(); // No cast needed
-Integer num = intBox.getValue();
-
 // Multiple type parameters
 public class Pair<K, V> {
-    private final K key;
-    private final V value;
-
+    private K key;
+    private V value;
+    
     public Pair(K key, V value) {
         this.key = key;
         this.value = value;
     }
-
+    
     public K getKey() { return key; }
     public V getValue() { return value; }
 }
 
 // Usage
-Pair<String, Integer> pair = new Pair<>("age", 30);
+Container<String> stringContainer = new Container<>();
+stringContainer.set("Hello");
+String value = stringContainer.get();
+
+Pair<String, Integer> pair = new Pair<>("Age", 30);
+String key = pair.getKey();
+Integer age = pair.getValue();
 ```
 
-### Generic Interfaces
+---
+
+## Generic Classes and Interfaces
+
+### Generic Class
 
 ```java
-// Generic interface
-public interface Repository<T, ID> {
-    T save(T entity);
-    Optional<T> findById(ID id);
-    List<T> findAll();
-    void delete(T entity);
+public class Repository<T> {
+    private final List<T> items = new ArrayList<>();
+    
+    public void add(T item) {
+        items.add(item);
+    }
+    
+    public T get(int index) {
+        return items.get(index);
+    }
+    
+    public List<T> getAll() {
+        return new ArrayList<>(items);
+    }
+    
+    public void remove(T item) {
+        items.remove(item);
+    }
+    
+    public int size() {
+        return items.size();
+    }
+}
+
+// Usage
+Repository<User> userRepo = new Repository<>();
+userRepo.add(new User("John"));
+User user = userRepo.get(0);
+```
+
+### Generic Interface
+
+```java
+public interface Validator<T> {
+    boolean validate(T item);
+    String getErrorMessage();
 }
 
 // Implementation
-public class UserRepository implements Repository<User, Long> {
-
+public class EmailValidator implements Validator<String> {
+    
     @Override
-    public User save(User entity) {
-        // Save user to database
-        return entity;
+    public boolean validate(String email) {
+        return email != null && email.contains("@");
     }
-
+    
     @Override
-    public Optional<User> findById(Long id) {
-        // Find user by ID
-        return Optional.empty();
-    }
-
-    @Override
-    public List<User> findAll() {
-        // Return all users
-        return List.of();
-    }
-
-    @Override
-    public void delete(User entity) {
-        // Delete user
+    public String getErrorMessage() {
+        return "Invalid email format";
     }
 }
+
+// Generic implementation
+public class RangeValidator<T extends Comparable<T>> implements Validator<T> {
+    private final T min;
+    private final T max;
+    
+    public RangeValidator(T min, T max) {
+        this.min = min;
+        this.max = max;
+    }
+    
+    @Override
+    public boolean validate(T item) {
+        return item.compareTo(min) >= 0 && item.compareTo(max) <= 0;
+    }
+    
+    @Override
+    public String getErrorMessage() {
+        return "Value must be between " + min + " and " + max;
+    }
+}
+
+// Usage
+Validator<String> emailValidator = new EmailValidator();
+boolean valid = emailValidator.validate("user@example.com");
+
+Validator<Integer> ageValidator = new RangeValidator<>(18, 100);
+boolean validAge = ageValidator.validate(25);
 ```
 
----
-
-## Type Parameters and Bounds
-
-### Upper Bounds (extends)
+### Nested Generic Classes
 
 ```java
-// Upper bound - T must be Number or subclass
-public class NumberBox<T extends Number> {
+public class Outer<T> {
     private T value;
-
-    public NumberBox(T value) {
-        this.value = value;
-    }
-
-    // Can use Number methods
-    public double getDoubleValue() {
-        return value.doubleValue();
-    }
-
-    public int compareTo(T other) {
-        return Double.compare(
-            value.doubleValue(),
-            other.doubleValue()
-        );
-    }
-}
-
-// Usage
-NumberBox<Integer> intBox = new NumberBox<>(42);
-NumberBox<Double> doubleBox = new NumberBox<>(3.14);
-// NumberBox<String> stringBox = new NumberBox<>("nope"); // Compile error!
-
-// Multiple bounds
-public class ComparableBox<T extends Number & Comparable<T>> {
-    private T value;
-
-    public ComparableBox(T value) {
-        this.value = value;
-    }
-
-    public boolean isGreaterThan(T other) {
-        // Can use both Number and Comparable methods
-        return value.compareTo(other) > 0;
-    }
-
-    public double getAsDouble() {
-        return value.doubleValue();
-    }
-}
-
-// Usage
-ComparableBox<Integer> box = new ComparableBox<>(42);
-boolean result = box.isGreaterThan(30); // true
-```
-
-### Real-World Example: Builder with Bounds
-
-```java
-// Generic builder with type bounds
-public class QueryBuilder<T extends BaseEntity> {
-    private final Class<T> entityClass;
-    private final List<Predicate> predicates = new ArrayList<>();
-    private Integer limit;
-    private Integer offset;
-
-    public QueryBuilder(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
-
-    public QueryBuilder<T> where(String field, Object value) {
-        predicates.add(new Predicate(field, value));
-        return this;
-    }
-
-    public QueryBuilder<T> limit(int limit) {
-        this.limit = limit;
-        return this;
-    }
-
-    public QueryBuilder<T> offset(int offset) {
-        this.offset = offset;
-        return this;
-    }
-
-    public List<T> execute() {
-        // Build and execute query
-        return List.of();
-    }
-}
-
-// Usage
-List<User> users = new QueryBuilder<>(User.class)
-    .where("age", 30)
-    .where("status", "ACTIVE")
-    .limit(10)
-    .execute();
-```
-
----
-
-## Wildcards Deep Dive
-
-### Unbounded Wildcard (?)
-
-```java
-// Unbounded wildcard - any type
-public void printList(List<?> list) {
-    for (Object item : list) {
-        System.out.println(item);
-    }
-}
-
-// Works with any list
-printList(List.of(1, 2, 3));
-printList(List.of("a", "b", "c"));
-
-// ❌ Cannot add elements (except null)
-public void cannotAdd(List<?> list) {
-    // list.add("string"); // Compile error!
-    // list.add(42);       // Compile error!
-    list.add(null);        // OK but useless
-}
-```
-
-### Upper Bounded Wildcard (? extends T)
-
-```java
-// Producer - reading from collection
-public double sumNumbers(List<? extends Number> numbers) {
-    double sum = 0;
-    for (Number num : numbers) {
-        sum += num.doubleValue();
-    }
-    return sum;
-}
-
-// Works with Number and all subtypes
-sumNumbers(List.of(1, 2, 3));           // List<Integer>
-sumNumbers(List.of(1.5, 2.5, 3.5));     // List<Double>
-sumNumbers(List.of(1L, 2L, 3L));        // List<Long>
-
-// ❌ Cannot add elements (except null)
-public void cannotAdd(List<? extends Number> numbers) {
-    // numbers.add(42);      // Compile error!
-    // numbers.add(3.14);    // Compile error!
-
-    // Why? We don't know the exact type
-    // Could be List<Integer>, List<Double>, etc.
-}
-
-// ✅ Can read as Number or supertype
-public Number getFirst(List<? extends Number> numbers) {
-    if (!numbers.isEmpty()) {
-        return numbers.get(0); // OK - returns Number
-    }
-    return null;
-}
-```
-
-### Lower Bounded Wildcard (? super T)
-
-```java
-// Consumer - writing to collection
-public void addIntegers(List<? super Integer> list) {
-    list.add(1);
-    list.add(2);
-    list.add(3);
-}
-
-// Works with Integer and all supertypes
-addIntegers(new ArrayList<Integer>());    // List<Integer>
-addIntegers(new ArrayList<Number>());     // List<Number>
-addIntegers(new ArrayList<Object>());     // List<Object>
-
-// ✅ Can add Integer or subtypes
-public void add(List<? super Integer> list, Integer value) {
-    list.add(value);     // OK
-    list.add(42);        // OK
-}
-
-// ❌ Cannot safely read as specific type
-public void cannotRead(List<? super Integer> list) {
-    Object obj = list.get(0);     // OK - can read as Object
-    // Integer num = list.get(0);  // Compile error!
-
-    // Why? Could be List<Number>, List<Object>, etc.
-    // Element might not be Integer
-}
-```
-
----
-
-## PECS Principle
-
-### Producer Extends, Consumer Super
-
-```java
-/**
- * PECS Rule:
- * - Producer Extends: Use <? extends T> when you only READ from structure
- * - Consumer Super: Use <? super T> when you only WRITE to structure
- */
-
-// Producer Extends - reading from source
-public static <T> void copy(
-        List<? extends T> source,    // Producer - extends
-        List<? super T> destination  // Consumer - super
-) {
-    for (T item : source) {
-        destination.add(item);
-    }
-}
-
-// Usage
-List<Integer> integers = List.of(1, 2, 3);
-List<Number> numbers = new ArrayList<>();
-
-copy(integers, numbers); // Works!
-
-// Real-world example: Collections.copy()
-// public static <T> void copy(
-//     List<? super T> dest,
-//     List<? extends T> src
-// )
-```
-
-### Practical Examples
-
-```java
-// Producer: Reading from collection
-public class Statistics {
-
-    // Producer - extends
-    public static double average(List<? extends Number> numbers) {
-        return numbers.stream()
-            .mapToDouble(Number::doubleValue)
-            .average()
-            .orElse(0.0);
-    }
-
-    // Producer - extends
-    public static <T extends Comparable<T>> T max(List<? extends T> list) {
-        return list.stream()
-            .max(Comparator.naturalOrder())
-            .orElseThrow();
-    }
-}
-
-// Consumer: Writing to collection
-public class CollectionUtils {
-
-    // Consumer - super
-    public static void addNumbers(List<? super Integer> list, int count) {
-        for (int i = 0; i < count; i++) {
-            list.add(i);
+    
+    public class Inner<U> {
+        private U innerValue;
+        
+        public void set(T outerValue, U innerValue) {
+            Outer.this.value = outerValue;
+            this.innerValue = innerValue;
+        }
+        
+        public Pair<T, U> getPair() {
+            return new Pair<>(value, innerValue);
         }
     }
-
-    // Consumer - super
-    public static <T> void fill(List<? super T> list, T value, int count) {
-        for (int i = 0; i < count; i++) {
-            list.add(value);
-        }
+    
+    public Inner<String> createStringInner() {
+        return new Inner<>();
     }
 }
 
 // Usage
-List<Number> numbers = new ArrayList<>();
-CollectionUtils.addNumbers(numbers, 5); // Adds 0,1,2,3,4
-CollectionUtils.fill(numbers, 42, 3);   // Adds 42,42,42
-
-List<Integer> integers = List.of(1, 2, 3, 4, 5);
-double avg = Statistics.average(integers); // 3.0
-Integer max = Statistics.max(integers);    // 5
+Outer<Integer> outer = new Outer<>();
+Outer<Integer>.Inner<String> inner = outer.new Inner<>();
+inner.set(42, "Hello");
 ```
 
 ---
@@ -410,81 +248,366 @@ Integer max = Statistics.max(integers);    // 5
 ### Basic Generic Methods
 
 ```java
-public class GenericMethods {
-
-    // Generic method - type parameter before return type
-    public static <T> T firstElement(List<T> list) {
+public class Utils {
+    
+    // Generic method
+    public static <T> T getFirst(List<T> list) {
         if (list.isEmpty()) {
             return null;
         }
         return list.get(0);
     }
-
+    
     // Multiple type parameters
     public static <K, V> Map<K, V> createMap(K[] keys, V[] values) {
         if (keys.length != values.length) {
             throw new IllegalArgumentException("Arrays must have same length");
         }
-
+        
         Map<K, V> map = new HashMap<>();
         for (int i = 0; i < keys.length; i++) {
             map.put(keys[i], values[i]);
         }
         return map;
     }
-
-    // Bounded type parameter
-    public static <T extends Comparable<T>> T findMax(T a, T b) {
+    
+    // Generic method with bounded type
+    public static <T extends Comparable<T>> T max(T a, T b) {
         return a.compareTo(b) > 0 ? a : b;
     }
+    
+    // Swap elements
+    public static <T> void swap(T[] array, int i, int j) {
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
 
-    // Usage
-    public static void main(String[] args) {
-        String first = firstElement(List.of("a", "b", "c")); // "a"
+// Usage
+List<String> strings = Arrays.asList("a", "b", "c");
+String first = Utils.getFirst(strings);
 
-        String[] keys = {"name", "age"};
-        Object[] values = {"John", 30};
-        Map<String, Object> map = createMap(keys, values);
+String[] keys = {"name", "age"};
+Object[] values = {"John", 30};
+Map<String, Object> map = Utils.createMap(keys, values);
 
-        Integer max = findMax(10, 20); // 20
+Integer maxValue = Utils.max(10, 20);
+String maxString = Utils.max("apple", "banana");
+```
+
+### Generic Methods in Generic Classes
+
+```java
+public class Container<T> {
+    private T value;
+    
+    // Regular method using class type parameter
+    public void setValue(T value) {
+        this.value = value;
+    }
+    
+    // Generic method with its own type parameter
+    public <U> U transform(Function<T, U> transformer) {
+        return transformer.apply(value);
+    }
+    
+    // Generic method with different type than class
+    public <U> Container<U> map(Function<T, U> mapper) {
+        Container<U> newContainer = new Container<>();
+        newContainer.setValue(mapper.apply(value));
+        return newContainer;
+    }
+}
+
+// Usage
+Container<String> stringContainer = new Container<>();
+stringContainer.setValue("123");
+
+// Transform String to Integer
+Integer number = stringContainer.transform(Integer::parseInt);
+
+// Map to new container type
+Container<Integer> intContainer = stringContainer.map(Integer::parseInt);
+```
+
+---
+
+## Bounded Type Parameters
+
+### Upper Bounds (extends)
+
+```java
+// Upper bound with class
+public class NumberContainer<T extends Number> {
+    private T value;
+    
+    public NumberContainer(T value) {
+        this.value = value;
+    }
+    
+    public double doubleValue() {
+        return value.doubleValue();  // Can call Number methods
+    }
+}
+
+// Usage
+NumberContainer<Integer> intContainer = new NumberContainer<>(42);
+NumberContainer<Double> doubleContainer = new NumberContainer<>(3.14);
+// NumberContainer<String> stringContainer = new NumberContainer<>("text"); // Compile error!
+
+// Upper bound with interface
+public class SortedList<T extends Comparable<T>> {
+    private final List<T> items = new ArrayList<>();
+    
+    public void add(T item) {
+        items.add(item);
+        Collections.sort(items);  // Can sort because T is Comparable
+    }
+    
+    public T getMin() {
+        return items.isEmpty() ? null : items.get(0);
+    }
+    
+    public T getMax() {
+        return items.isEmpty() ? null : items.get(items.size() - 1);
+    }
+}
+
+// Multiple bounds (class must be first, interfaces follow)
+public class DataProcessor<T extends Number & Serializable> {
+    public void process(T data) {
+        // Can use Number methods
+        double value = data.doubleValue();
+        
+        // Can serialize
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(data);
     }
 }
 ```
 
-### Advanced Generic Methods
+### Recursive Type Bounds
 
 ```java
-public class AdvancedGenericMethods {
-
-    // Generic method with multiple bounds
-    public static <T extends Comparable<T> & Serializable> T cloneAndCompare(
-            T original, T copy) {
-
-        // Can use methods from both Comparable and Serializable
-        int comparison = original.compareTo(copy);
-        return comparison > 0 ? original : copy;
+// Enum pattern
+public class Enum<E extends Enum<E>> implements Comparable<E> {
+    @Override
+    public int compareTo(E other) {
+        return this.ordinal() - other.ordinal();
     }
+}
 
-    // Generic method with wildcard parameters
-    public static <T> void swap(List<T> list, int i, int j) {
-        T temp = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, temp);
+// Builder pattern
+public class Builder<T extends Builder<T>> {
+    
+    @SuppressWarnings("unchecked")
+    protected T self() {
+        return (T) this;
     }
+    
+    public T withName(String name) {
+        // Set name
+        return self();
+    }
+    
+    public T withAge(int age) {
+        // Set age
+        return self();
+    }
+}
 
-    // Recursive type bound
-    public static <T extends Comparable<? super T>> T max(Collection<T> collection) {
-        return collection.stream()
-            .max(Comparator.naturalOrder())
-            .orElseThrow();
+public class EmployeeBuilder extends Builder<EmployeeBuilder> {
+    public EmployeeBuilder withSalary(double salary) {
+        // Set salary
+        return self();
     }
+}
 
-    // Generic method returning generic type
-    public static <T> Optional<T> findFirst(List<T> list, Predicate<T> predicate) {
-        return list.stream()
-            .filter(predicate)
-            .findFirst();
+// Usage - fluent API
+EmployeeBuilder builder = new EmployeeBuilder()
+    .withName("John")
+    .withAge(30)
+    .withSalary(50000.0);
+```
+
+---
+
+## Wildcards
+
+### Unbounded Wildcard (?)
+
+```java
+// Accepts any type
+public static void printList(List<?> list) {
+    for (Object item : list) {
+        System.out.println(item);
     }
+}
+
+// Can read as Object, cannot write
+public static int countElements(List<?> list) {
+    return list.size();  // OK
+    // list.add("item");  // Compile error!
+}
+
+// Usage
+List<String> strings = Arrays.asList("a", "b", "c");
+List<Integer> integers = Arrays.asList(1, 2, 3);
+printList(strings);
+printList(integers);
+```
+
+### Upper Bounded Wildcard (? extends T)
+
+```java
+// Read-only, accepts T or any subtype of T
+public static double sumNumbers(List<? extends Number> numbers) {
+    double sum = 0;
+    for (Number num : numbers) {
+        sum += num.doubleValue();  // Can read as Number
+    }
+    // numbers.add(42);  // Compile error! Cannot write
+    return sum;
+}
+
+// Usage
+List<Integer> integers = Arrays.asList(1, 2, 3);
+List<Double> doubles = Arrays.asList(1.1, 2.2, 3.3);
+List<Number> numbers = Arrays.asList(1, 2.5, 3L);
+
+double sum1 = sumNumbers(integers);  // OK
+double sum2 = sumNumbers(doubles);   // OK
+double sum3 = sumNumbers(numbers);   // OK
+
+// Copy from source (read)
+public static <T> void copy(List<? extends T> source, List<T> dest) {
+    for (T item : source) {
+        dest.add(item);  // Read from source, write to dest
+    }
+}
+```
+
+### Lower Bounded Wildcard (? super T)
+
+```java
+// Write-only, accepts T or any supertype of T
+public static void addNumbers(List<? super Integer> list) {
+    list.add(1);      // Can write Integer
+    list.add(2);
+    list.add(3);
+    
+    // Object obj = list.get(0);  // Can only read as Object
+    // Integer num = list.get(0); // Compile error!
+}
+
+// Usage
+List<Integer> integers = new ArrayList<>();
+List<Number> numbers = new ArrayList<>();
+List<Object> objects = new ArrayList<>();
+
+addNumbers(integers);  // OK
+addNumbers(numbers);   // OK
+addNumbers(objects);   // OK
+
+// Comparator example
+public static <T> void sort(List<T> list, Comparator<? super T> comparator) {
+    list.sort(comparator);
+}
+
+// Can use comparator for T or any supertype
+List<Integer> ints = Arrays.asList(3, 1, 2);
+Comparator<Number> numberComparator = Comparator.comparing(Number::doubleValue);
+sort(ints, numberComparator);  // OK - Comparator<Number> works for List<Integer>
+```
+
+---
+
+## PECS Principle
+
+**PECS: Producer Extends, Consumer Super**
+
+### Producer Extends
+
+```java
+// Producer: You want to READ from the structure (it produces items)
+// Use <? extends T>
+
+public class Stack<E> {
+    private final List<E> elements = new ArrayList<>();
+    
+    // Producer: Reading from source (source produces items)
+    public void pushAll(Iterable<? extends E> src) {
+        for (E e : src) {
+            elements.add(e);
+        }
+    }
+}
+
+// Usage
+Stack<Number> numberStack = new Stack<>();
+List<Integer> integers = Arrays.asList(1, 2, 3);
+List<Double> doubles = Arrays.asList(1.1, 2.2);
+
+numberStack.pushAll(integers);  // Integer extends Number
+numberStack.pushAll(doubles);   // Double extends Number
+```
+
+### Consumer Super
+
+```java
+// Consumer: You want to WRITE to the structure (it consumes items)
+// Use <? super T>
+
+public class Stack<E> {
+    private final List<E> elements = new ArrayList<>();
+    
+    // Consumer: Writing to destination (destination consumes items)
+    public void popAll(Collection<? super E> dst) {
+        while (!elements.isEmpty()) {
+            dst.add(elements.remove(elements.size() - 1));
+        }
+    }
+}
+
+// Usage
+Stack<Integer> intStack = new Stack<>();
+intStack.pushAll(Arrays.asList(1, 2, 3));
+
+Collection<Integer> integers = new ArrayList<>();
+Collection<Number> numbers = new ArrayList<>();
+Collection<Object> objects = new ArrayList<>();
+
+intStack.popAll(integers);  // OK
+intStack.popAll(numbers);   // OK - Number is super of Integer
+intStack.popAll(objects);   // OK - Object is super of Integer
+```
+
+### PECS in Collections API
+
+```java
+// Collections.copy uses PECS
+public static <T> void copy(
+    List<? super T> dest,     // Consumer - writes to dest
+    List<? extends T> src     // Producer - reads from src
+) {
+    for (T item : src) {
+        dest.add(item);
+    }
+}
+
+// Usage
+List<Integer> integers = Arrays.asList(1, 2, 3);
+List<Number> numbers = new ArrayList<>();
+
+Collections.copy(numbers, integers);  // OK - reads Integer, writes Number
+
+// Collections.max uses producer
+public static <T extends Object & Comparable<? super T>> T max(
+    Collection<? extends T> coll  // Producer - reads from collection
+) {
+    // Implementation
 }
 ```
 
@@ -495,519 +618,523 @@ public class AdvancedGenericMethods {
 ### Understanding Type Erasure
 
 ```java
-// What you write:
+// Source code
 public class Box<T> {
     private T value;
-
+    
     public void set(T value) {
         this.value = value;
     }
-
+    
     public T get() {
         return value;
     }
 }
 
-// What compiler generates (after type erasure):
+// After type erasure (what JVM sees)
 public class Box {
-    private Object value; // T becomes Object
-
+    private Object value;  // T becomes Object
+    
     public void set(Object value) {
         this.value = value;
     }
-
+    
     public Object get() {
         return value;
     }
 }
 
-// With bounds:
-public class NumberBox<T extends Number> {
-    private T value;
-}
-
-// After erasure:
-public class NumberBox {
-    private Number value; // T becomes Number (the bound)
-}
+// With bounds: <T extends Number>
+// After erasure: T becomes Number (not Object)
 ```
 
-### Type Erasure Implications
+### Implications of Type Erasure
 
 ```java
-// ❌ Cannot create instances of type parameter
-public class Box<T> {
-    public T createInstance() {
-        // return new T(); // Compile error!
-        return null;
+// ❌ Cannot create instance of type parameter
+public class Container<T> {
+    public T create() {
+        // return new T();  // Compile error!
     }
 }
 
 // ✅ Solution: Pass class object
-public class Box<T> {
+public class Container<T> {
     private final Class<T> type;
-
-    public Box(Class<T> type) {
+    
+    public Container(Class<T> type) {
         this.type = type;
     }
-
-    public T createInstance() throws Exception {
+    
+    public T create() throws Exception {
         return type.getDeclaredConstructor().newInstance();
     }
 }
 
-// ❌ Cannot create generic arrays
-public class Container<T> {
-    public void method() {
-        // T[] array = new T[10]; // Compile error!
-    }
+// ❌ Cannot create generic array
+public class GenericArray<T> {
+    // private T[] array = new T[10];  // Compile error!
 }
 
-// ✅ Solution: Use List or create array with reflection
-public class Container<T> {
-    private final Class<T> type;
-
-    public Container(Class<T> type) {
-        this.type = type;
-    }
-
+// ✅ Solution: Use ArrayList or Object array with cast
+public class GenericArray<T> {
+    private final List<T> list = new ArrayList<>();
+    
+    // Or with Object array
     @SuppressWarnings("unchecked")
-    public T[] createArray(int size) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    private final T[] array = (T[]) new Object[10];
 }
 
-// ❌ Cannot use instanceof with generic type
-public <T> boolean isInstance(Object obj) {
-    // if (obj instanceof T) { } // Compile error!
-    // if (obj instanceof List<String>) { } // Compile error!
+// ❌ Cannot use instanceof with parameterized types
+if (obj instanceof List<String>) { }  // Compile error!
 
-    if (obj instanceof List<?>) { } // OK
-    return false;
-}
-```
+// ✅ Can use with raw type or wildcard
+if (obj instanceof List<?>) { }  // OK
+if (obj instanceof List) { }     // OK (raw type)
 
-### Bridge Methods
+// ❌ Cannot catch or throw generic exception
+try {
+    // Something
+} catch (T e) { }  // Compile error!
 
-```java
-// Generic class
-public class Node<T> {
-    private T data;
-
-    public void setData(T data) {
-        this.data = data;
-    }
-}
-
-// Subclass
-public class IntegerNode extends Node<Integer> {
-    @Override
-    public void setData(Integer data) {
-        super.setData(data);
-    }
-}
-
-// After type erasure, compiler generates bridge method:
-public class IntegerNode extends Node {
-    // Bridge method (synthetic)
-    public void setData(Object data) {
-        setData((Integer) data); // Cast and call
-    }
-
-    // Your method
-    public void setData(Integer data) {
-        super.setData(data);
-    }
-}
+// ❌ Cannot have overloaded methods that erase to same signature
+public void process(List<String> list) { }
+public void process(List<Integer> list) { }  // Compile error! Same erasure
 ```
 
 ---
 
-## Generics with Records
+## Generic Collections
 
-### Generic Records (Java 16+)
+### Common Generic Collections
 
 ```java
-// Simple generic record
-public record Result<T>(T value, String message, boolean success) {
+// List
+List<String> arrayList = new ArrayList<>();
+List<String> linkedList = new LinkedList<>();
+List<String> immutableList = List.of("a", "b", "c");  // Java 9+
 
-    public static <T> Result<T> success(T value) {
-        return new Result<>(value, "Success", true);
+// Set
+Set<String> hashSet = new HashSet<>();
+Set<String> linkedHashSet = new LinkedHashSet<>();
+Set<String> treeSet = new TreeSet<>();
+Set<String> immutableSet = Set.of("a", "b", "c");
+
+// Map
+Map<String, Integer> hashMap = new HashMap<>();
+Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+Map<String, Integer> treeMap = new TreeMap<>();
+Map<String, Integer> immutableMap = Map.of("a", 1, "b", 2);
+
+// Queue
+Queue<String> linkedListQueue = new LinkedList<>();
+Queue<String> priorityQueue = new PriorityQueue<>();
+Deque<String> arrayDeque = new ArrayDeque<>();
+
+// Concurrent collections
+Map<String, Integer> concurrentHashMap = new ConcurrentHashMap<>();
+Queue<String> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+```
+
+### Type-Safe Collections
+
+```java
+public class UserRepository {
+    private final Map<String, User> users = new HashMap<>();
+    private final List<User> userList = new ArrayList<>();
+    
+    public void addUser(User user) {
+        users.put(user.getId(), user);
+        userList.add(user);
     }
-
-    public static <T> Result<T> failure(String message) {
-        return new Result<>(null, message, false);
+    
+    public Optional<User> findById(String id) {
+        return Optional.ofNullable(users.get(id));
+    }
+    
+    public List<User> findAll() {
+        return new ArrayList<>(userList);  // Defensive copy
+    }
+    
+    public List<User> findByPredicate(Predicate<User> predicate) {
+        return userList.stream()
+            .filter(predicate)
+            .collect(Collectors.toList());
     }
 }
 
 // Usage
-Result<User> userResult = Result.success(new User("John"));
-Result<Payment> failedPayment = Result.failure("Payment declined");
+UserRepository repo = new UserRepository();
+repo.addUser(new User("1", "John"));
 
-// Generic record with bounds
-public record Wrapper<T extends Comparable<T>>(T value) {
-
-    public boolean isGreaterThan(T other) {
-        return value.compareTo(other) > 0;
-    }
-
-    public T max(T other) {
-        return value.compareTo(other) > 0 ? value : other;
-    }
-}
-
-// Usage
-Wrapper<Integer> wrapper = new Wrapper<>(42);
-boolean greater = wrapper.isGreaterThan(30); // true
-Integer max = wrapper.max(50); // 50
-```
-
-### Either Pattern with Records
-
-```java
-// Sealed interface with generic records
-public sealed interface Either<L, R> {
-
-    record Left<L, R>(L value) implements Either<L, R> {
-        public <T> T fold(Function<L, T> leftFn, Function<R, T> rightFn) {
-            return leftFn.apply(value);
-        }
-    }
-
-    record Right<L, R>(R value) implements Either<L, R> {
-        public <T> T fold(Function<L, T> leftFn, Function<R, T> rightFn) {
-            return rightFn.apply(value);
-        }
-    }
-
-    static <L, R> Either<L, R> left(L value) {
-        return new Left<>(value);
-    }
-
-    static <L, R> Either<L, R> right(R value) {
-        return new Right<>(value);
-    }
-
-    <T> T fold(Function<L, T> leftFn, Function<R, T> rightFn);
-}
-
-// Usage - representing success/failure
-public Either<String, User> findUser(Long id) {
-    try {
-        User user = userRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("User not found"));
-        return Either.right(user);
-    } catch (Exception e) {
-        return Either.left(e.getMessage());
-    }
-}
-
-// Pattern matching with Either
-Either<String, User> result = findUser(123L);
-
-String message = result.fold(
-    error -> "Error: " + error,
-    user -> "Found user: " + user.getName()
-);
-```
-
----
-
-## Generics with Sealed Types
-
-### Sealed Generic Hierarchies (Java 17+)
-
-```java
-// Sealed generic interface
-public sealed interface Response<T> {
-
-    record Success<T>(T data) implements Response<T> {}
-
-    record Error<T>(String message, int code) implements Response<T> {}
-
-    record Loading<T>() implements Response<T> {}
-}
-
-// Pattern matching with sealed generics
-public <T> String handleResponse(Response<T> response) {
-    return switch (response) {
-        case Response.Success<T>(var data) -> "Success: " + data;
-        case Response.Error<T>(var msg, var code) -> "Error " + code + ": " + msg;
-        case Response.Loading<T>() -> "Loading...";
-    };
-}
-
-// Usage
-Response<User> userResponse = new Response.Success<>(new User("John"));
-String result = handleResponse(userResponse); // "Success: User[name=John]"
-```
-
-### Generic Sealed Classes
-
-```java
-// Sealed class hierarchy with generics
-public sealed abstract class Tree<T> {
-
-    public static final class Leaf<T> extends Tree<T> {
-        private final T value;
-
-        public Leaf(T value) {
-            this.value = value;
-        }
-
-        public T getValue() {
-            return value;
-        }
-    }
-
-    public static final class Node<T> extends Tree<T> {
-        private final Tree<T> left;
-        private final Tree<T> right;
-
-        public Node(Tree<T> left, Tree<T> right) {
-            this.left = left;
-            this.right = right;
-        }
-
-        public Tree<T> getLeft() {
-            return left;
-        }
-
-        public Tree<T> getRight() {
-            return right;
-        }
-    }
-
-    // Pattern matching for tree traversal
-    public <R> R match(
-            Function<T, R> leafFn,
-            BiFunction<Tree<T>, Tree<T>, R> nodeFn) {
-
-        return switch (this) {
-            case Leaf<T> leaf -> leafFn.apply(leaf.getValue());
-            case Node<T> node -> nodeFn.apply(node.getLeft(), node.getRight());
-        };
-    }
-}
-
-// Usage
-Tree<Integer> tree = new Tree.Node<>(
-    new Tree.Leaf<>(1),
-    new Tree.Node<>(
-        new Tree.Leaf<>(2),
-        new Tree.Leaf<>(3)
-    )
-);
-
-// Sum all values
-int sum = sumTree(tree);
-
-public int sumTree(Tree<Integer> tree) {
-    return tree.match(
-        value -> value,
-        (left, right) -> sumTree(left) + sumTree(right)
-    );
-}
-```
-
----
-
-## Generics and Pattern Matching
-
-### Pattern Matching for Generics (Java 21+)
-
-```java
-// Generic class with pattern matching
-public sealed interface Optional<T> {
-    record Some<T>(T value) implements Optional<T> {}
-    record None<T>() implements Optional<T> {}
-}
-
-// Pattern matching with generics
-public <T> String describe(Optional<T> opt) {
-    return switch (opt) {
-        case Optional.Some<T>(var value) -> "Present: " + value;
-        case Optional.None<T>() -> "Empty";
-    };
-}
-
-// Generic type patterns
-public void process(Object obj) {
-    if (obj instanceof List<?> list) {
-        System.out.println("List size: " + list.size());
-    }
-
-    if (obj instanceof Map<?, ?> map) {
-        System.out.println("Map size: " + map.size());
-    }
-}
-
-// Record patterns with generics
-public record Pair<A, B>(A first, B second) {}
-
-public <A, B> void processPair(Pair<A, B> pair) {
-    if (pair instanceof Pair(var first, var second)) {
-        System.out.println("First: " + first);
-        System.out.println("Second: " + second);
-    }
-}
+Optional<User> user = repo.findById("1");
+List<User> allUsers = repo.findAll();
+List<User> adults = repo.findByPredicate(u -> u.getAge() >= 18);
 ```
 
 ---
 
 ## Advanced Patterns
 
-### Self-Bounded Generics (Recursive Type Bound)
+### Generic Factory Pattern
 
 ```java
-// Self-bounded type - T must extend Comparable of itself
-public abstract class Entity<T extends Entity<T>> implements Comparable<T> {
-    protected Long id;
-
-    @Override
-    public int compareTo(T other) {
-        return Long.compare(this.id, other.id);
-    }
-
-    // Can return exact subtype
-    public abstract T withId(Long id);
+public interface Factory<T> {
+    T create();
 }
 
-public class User extends Entity<User> {
-    private String name;
-
+public class UserFactory implements Factory<User> {
     @Override
-    public User withId(Long id) {
-        User user = new User();
-        user.id = id;
-        user.name = this.name;
-        return user; // Returns User, not Entity
+    public User create() {
+        return new User();
     }
 }
 
-// Fluent builder with self-bounded generics
-public abstract class Builder<T, B extends Builder<T, B>> {
+// Generic factory with parameters
+public interface ParameterizedFactory<T, P> {
+    T create(P param);
+}
 
+public class UserFromIdFactory implements ParameterizedFactory<User, String> {
+    @Override
+    public User create(String id) {
+        return new User(id);
+    }
+}
+
+// Factory registry
+public class FactoryRegistry {
+    private final Map<Class<?>, Factory<?>> factories = new HashMap<>();
+    
+    public <T> void register(Class<T> type, Factory<T> factory) {
+        factories.put(type, factory);
+    }
+    
     @SuppressWarnings("unchecked")
-    protected B self() {
-        return (B) this;
-    }
-
-    public abstract T build();
-}
-
-public class UserBuilder extends Builder<User, UserBuilder> {
-    private String name;
-    private String email;
-
-    public UserBuilder withName(String name) {
-        this.name = name;
-        return self(); // Returns UserBuilder, not Builder
-    }
-
-    public UserBuilder withEmail(String email) {
-        this.email = email;
-        return self();
-    }
-
-    @Override
-    public User build() {
-        return new User(name, email);
+    public <T> T create(Class<T> type) {
+        Factory<T> factory = (Factory<T>) factories.get(type);
+        if (factory == null) {
+            throw new IllegalArgumentException("No factory for " + type);
+        }
+        return factory.create();
     }
 }
 
-// Usage - fluent chaining works!
-User user = new UserBuilder()
+// Usage
+FactoryRegistry registry = new FactoryRegistry();
+registry.register(User.class, new UserFactory());
+
+User user = registry.create(User.class);
+```
+
+### Generic Builder Pattern
+
+```java
+public abstract class Builder<T extends Builder<T, R>, R> {
+    
+    @SuppressWarnings("unchecked")
+    protected T self() {
+        return (T) this;
+    }
+    
+    public abstract R build();
+}
+
+public class User {
+    private final String name;
+    private final String email;
+    private final int age;
+    
+    private User(UserBuilder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.age = builder.age;
+    }
+    
+    public static class UserBuilder extends Builder<UserBuilder, User> {
+        private String name;
+        private String email;
+        private int age;
+        
+        public UserBuilder withName(String name) {
+            this.name = name;
+            return self();
+        }
+        
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return self();
+        }
+        
+        public UserBuilder withAge(int age) {
+            this.age = age;
+            return self();
+        }
+        
+        @Override
+        public User build() {
+            return new User(this);
+        }
+    }
+}
+
+// Usage
+User user = new User.UserBuilder()
     .withName("John")
     .withEmail("john@example.com")
+    .withAge(30)
     .build();
 ```
 
-### Type Tokens and Super Type Tokens
+### Generic Strategy Pattern
 
 ```java
-// Type token for runtime type information
-public class TypeReference<T> {
-    private final Type type;
+public interface Strategy<T, R> {
+    R execute(T input);
+}
 
-    protected TypeReference() {
-        Type superclass = getClass().getGenericSuperclass();
-        this.type = ((ParameterizedType) superclass).getActualTypeArguments()[0];
+public class Context<T, R> {
+    private Strategy<T, R> strategy;
+    
+    public void setStrategy(Strategy<T, R> strategy) {
+        this.strategy = strategy;
     }
+    
+    public R executeStrategy(T input) {
+        if (strategy == null) {
+            throw new IllegalStateException("Strategy not set");
+        }
+        return strategy.execute(input);
+    }
+}
 
-    public Type getType() {
-        return type;
+// Concrete strategies
+public class UpperCaseStrategy implements Strategy<String, String> {
+    @Override
+    public String execute(String input) {
+        return input.toUpperCase();
+    }
+}
+
+public class LengthStrategy implements Strategy<String, Integer> {
+    @Override
+    public Integer execute(String input) {
+        return input.length();
     }
 }
 
 // Usage
-TypeReference<List<String>> typeRef = new TypeReference<>() {};
-Type type = typeRef.getType();
-// type = java.util.List<java.lang.String>
+Context<String, String> stringContext = new Context<>();
+stringContext.setStrategy(new UpperCaseStrategy());
+String result = stringContext.executeStrategy("hello");  // "HELLO"
 
-// Practical use: JSON parsing
-public class JsonParser {
-
-    public <T> T parse(String json, TypeReference<T> typeRef) {
-        // Use typeRef.getType() to parse with full generic info
-        return null; // Actual implementation would use Jackson/Gson
-    }
-}
-
-// Usage
-List<User> users = jsonParser.parse(
-    jsonString,
-    new TypeReference<List<User>>() {}
-);
+Context<String, Integer> intContext = new Context<>();
+intContext.setStrategy(new LengthStrategy());
+Integer length = intContext.executeStrategy("hello");  // 5
 ```
 
-### Phantom Types
+### Generic Visitor Pattern
 
 ```java
-// Phantom types for compile-time state tracking
-public interface State {}
-public interface Validated extends State {}
-public interface Unvalidated extends State {}
+public interface Visitor<T, R> {
+    R visit(T element);
+}
 
-public class Form<S extends State> {
-    private final Map<String, String> fields;
+public interface Visitable<T> {
+    <R> R accept(Visitor<T, R> visitor);
+}
 
-    private Form(Map<String, String> fields) {
-        this.fields = fields;
+public class Document implements Visitable<Document> {
+    private final String content;
+    
+    public Document(String content) {
+        this.content = content;
     }
-
-    public static Form<Unvalidated> create() {
-        return new Form<>(new HashMap<>());
+    
+    public String getContent() {
+        return content;
     }
-
-    public Form<Unvalidated> withField(String key, String value) {
-        fields.put(key, value);
-        return this;
+    
+    @Override
+    public <R> R accept(Visitor<Document, R> visitor) {
+        return visitor.visit(this);
     }
+}
 
-    public Form<Validated> validate() {
-        // Validation logic
-        if (fields.isEmpty()) {
-            throw new IllegalStateException("No fields to validate");
-        }
-        return new Form<>(this.fields);
+// Concrete visitors
+public class WordCountVisitor implements Visitor<Document, Integer> {
+    @Override
+    public Integer visit(Document document) {
+        return document.getContent().split("\\s+").length;
     }
+}
 
-    // Only validated forms can be submitted
-    public void submit(Form<Validated> form) {
-        // Submit the form
+public class UpperCaseVisitor implements Visitor<Document, String> {
+    @Override
+    public String visit(Document document) {
+        return document.getContent().toUpperCase();
     }
 }
 
 // Usage
-Form<Unvalidated> form = Form.create()
-    .withField("name", "John")
-    .withField("email", "john@example.com");
+Document doc = new Document("Hello World");
 
-// form.submit(form); // Compile error!
+Integer wordCount = doc.accept(new WordCountVisitor());
+String upperCase = doc.accept(new UpperCaseVisitor());
+```
 
-Form<Validated> validated = form.validate();
-validated.submit(validated); // OK!
+---
+
+## Recursive Type Bounds
+
+### Self-Referencing Types
+
+```java
+// Comparable pattern
+public interface Comparable<T extends Comparable<T>> {
+    int compareTo(T other);
+}
+
+// Implementation
+public class Person implements Comparable<Person> {
+    private final String name;
+    private final int age;
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    @Override
+    public int compareTo(Person other) {
+        return Integer.compare(this.age, other.age);
+    }
+}
+
+// Generic max with recursive bound
+public static <T extends Comparable<T>> T max(List<T> list) {
+    if (list.isEmpty()) {
+        throw new IllegalArgumentException("Empty list");
+    }
+    
+    T max = list.get(0);
+    for (T item : list) {
+        if (item.compareTo(max) > 0) {
+            max = item;
+        }
+    }
+    return max;
+}
+```
+
+### Builder with Inheritance
+
+```java
+public abstract class Animal<T extends Animal<T>> {
+    private String name;
+    
+    @SuppressWarnings("unchecked")
+    protected T self() {
+        return (T) this;
+    }
+    
+    public T setName(String name) {
+        this.name = name;
+        return self();
+    }
+    
+    public String getName() {
+        return name;
+    }
+}
+
+public class Dog extends Animal<Dog> {
+    private String breed;
+    
+    public Dog setBreed(String breed) {
+        this.breed = breed;
+        return self();
+    }
+    
+    public String getBreed() {
+        return breed;
+    }
+}
+
+// Usage - fluent API works correctly
+Dog dog = new Dog()
+    .setName("Buddy")      // Returns Dog, not Animal
+    .setBreed("Labrador"); // Can chain Dog-specific methods
+```
+
+---
+
+## Type Inference
+
+### Diamond Operator (Java 7+)
+
+```java
+// Before Java 7
+List<String> list = new ArrayList<String>();
+Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
+
+// Java 7+ with diamond operator
+List<String> list = new ArrayList<>();
+Map<String, List<Integer>> map = new HashMap<>();
+
+// Works with nested generics
+List<Map<String, List<Integer>>> complex = new ArrayList<>();
+```
+
+### Type Inference in Methods
+
+```java
+// Type inference from arguments
+public static <T> List<T> asList(T... elements) {
+    return Arrays.asList(elements);
+}
+
+// Usage - type inferred from arguments
+List<String> strings = asList("a", "b", "c");  // T inferred as String
+List<Integer> integers = asList(1, 2, 3);      // T inferred as Integer
+
+// Explicit type witness (when needed)
+List<String> empty = Collections.<String>emptyList();
+
+// Target-type inference (Java 8+)
+List<String> list = new ArrayList<>();
+list.add("hello");
+
+// Stream API with type inference
+List<String> strings = Arrays.asList("a", "b", "c");
+List<Integer> lengths = strings.stream()
+    .map(String::length)  // Type inferred
+    .collect(Collectors.toList());
+```
+
+### Var Keyword (Java 10+)
+
+```java
+// Local variable type inference
+var list = new ArrayList<String>();  // ArrayList<String>
+var map = new HashMap<String, Integer>();  // HashMap<String, Integer>
+var stream = list.stream();  // Stream<String>
+
+// With generic methods
+var result = Arrays.asList("a", "b", "c");  // List<String>
+
+// ❌ Cannot use with null
+// var x = null;  // Compile error!
+
+// ❌ Cannot use without initializer
+// var y;  // Compile error!
+
+// ✅ Use when type is obvious
+var userList = new ArrayList<User>();
+var userMap = new HashMap<String, User>();
+
+// ❌ Don't overuse - prefer explicit types when clarity matters
+var x = getResult();  // What type is x? Not clear!
 ```
 
 ---
@@ -1018,58 +1145,83 @@ validated.submit(validated); // OK!
 
 ```java
 // ❌ BAD: Using raw types
-List list = new ArrayList(); // Raw type - no type safety
-list.add("string");
-list.add(42);
+List list = new ArrayList();
+list.add("String");
+list.add(123);
+String str = (String) list.get(1);  // ClassCastException!
 
-String str = (String) list.get(1); // ClassCastException!
-
-// ✅ GOOD: Always use generics
+// ✅ GOOD: Use generics
 List<String> list = new ArrayList<>();
-list.add("string");
-// list.add(42); // Compile error
+list.add("String");
+// list.add(123);  // Compile error!
 ```
 
-### Pitfall 2: Heap Pollution
+### Pitfall 2: Generic Array Creation
 
 ```java
-// ❌ Heap pollution with varargs
-@SafeVarargs // Suppresses warning, but method is NOT safe!
-public static <T> void dangerousMethod(T... elements) {
-    Object[] array = elements;
-    array[0] = "String"; // Heap pollution!
+// ❌ BAD: Cannot create generic array
+public class Container<T> {
+    // private T[] array = new T[10];  // Compile error!
 }
 
-List<Integer> list = new ArrayList<>();
-list.add(42);
-dangerousMethod(list); // ClassCastException later!
-
-// ✅ GOOD: Safe varargs usage
-@SafeVarargs
-public static <T> List<T> safeMethod(T... elements) {
-    return Arrays.asList(elements); // Safe - no modification
+// ✅ GOOD: Use List or cast
+public class Container<T> {
+    private final List<T> list = new ArrayList<>();
+    
+    // Or
+    @SuppressWarnings("unchecked")
+    private final T[] array = (T[]) new Object[10];
 }
 ```
 
-### Pitfall 3: Generic Exception Types
+### Pitfall 3: Type Erasure Confusion
 
 ```java
-// ❌ Cannot catch generic exceptions
-public <T extends Exception> void method() {
-    try {
-        // some code
-    } catch (T e) { // Compile error!
-        // handle
+// ❌ BAD: Thinking generics work at runtime
+public <T> void process(List<T> list) {
+    // if (list instanceof List<String>) { }  // Compile error!
+}
+
+// ✅ GOOD: Use class parameter for runtime check
+public <T> void process(List<T> list, Class<T> type) {
+    if (type == String.class) {
+        // Process as strings
     }
 }
+```
 
-// ❌ Cannot create generic exception
-public class GenericException<T> extends Exception { // Compile error!
+### Pitfall 4: Wildcard Confusion
+
+```java
+// ❌ BAD: Cannot write to producer
+public void bad(List<? extends Number> list) {
+    // list.add(42);  // Compile error!
 }
 
-// ✅ Can throw generic exceptions
-public <T extends Exception> void throwIt(T exception) throws T {
-    throw exception;
+// ✅ GOOD: Remember PECS
+public void addNumbers(List<? super Integer> list) {
+    list.add(42);  // OK - Consumer
+}
+
+public double sum(List<? extends Number> list) {
+    return list.stream()
+        .mapToDouble(Number::doubleValue)
+        .sum();  // OK - Producer
+}
+```
+
+### Pitfall 5: Missing Bounds
+
+```java
+// ❌ BAD: No bounds when needed
+public <T> T findMax(List<T> list) {
+    // Cannot compare T objects!
+    // return Collections.max(list);  // Compile error!
+}
+
+// ✅ GOOD: Add appropriate bound
+public <T extends Comparable<T>> T findMax(List<T> list) {
+    return Collections.max(list);  // OK
 }
 ```
 
@@ -1079,153 +1231,94 @@ public <T extends Exception> void throwIt(T exception) throws T {
 
 ### ✅ DO
 
-```java
-// Use meaningful type parameter names
-public class Repository<Entity, Id> {} // Better than <T, U>
+1. **Use generics instead of raw types**
+   ```java
+   List<String> list = new ArrayList<>();  // ✅
+   List list = new ArrayList();             // ❌
+   ```
 
-// Use bounded wildcards for API flexibility
-public void processNumbers(List<? extends Number> numbers) {}
+2. **Favor immutable generic collections**
+   ```java
+   List<String> immutable = List.of("a", "b", "c");
+   Set<Integer> immutableSet = Set.of(1, 2, 3);
+   ```
 
-// Apply PECS principle
-public <T> void copy(
-    List<? extends T> source,
-    List<? super T> dest
-) {}
+3. **Use bounded wildcards for API flexibility**
+   ```java
+   public void process(List<? extends Number> numbers) { }
+   ```
 
-// Use type inference (diamond operator)
-Map<String, List<Integer>> map = new HashMap<>(); // Not HashMap<String, List<Integer>>()
+4. **Apply PECS principle**
+   ```java
+   public <T> void copy(List<? super T> dest, List<? extends T> src) { }
+   ```
 
-// Use @SafeVarargs appropriately
-@SafeVarargs
-public static <T> List<T> listOf(T... elements) {
-    return Arrays.asList(elements);
-}
-```
+5. **Use diamond operator**
+   ```java
+   Map<String, List<Integer>> map = new HashMap<>();
+   ```
+
+6. **Prefer generic methods**
+   ```java
+   public static <T> List<T> asList(T... items) {
+       return Arrays.asList(items);
+   }
+   ```
+
+7. **Document type parameters**
+   ```java
+   /**
+    * @param <T> the type of elements in this list
+    */
+   public interface List<T> { }
+   ```
+
+8. **Use meaningful type parameter names**
+   ```java
+   public interface Map<K, V> { }  // ✅ Clear
+   public interface Map<T, U> { }  // ❌ Less clear
+   ```
+
+9. **Return most specific type**
+   ```java
+   public ArrayList<String> getList() {  // ✅ Specific
+       return new ArrayList<>();
+   }
+   ```
+
+10. **Use @SafeVarargs for varargs**
+    ```java
+    @SafeVarargs
+    public static <T> List<T> asList(T... items) {
+        return Arrays.asList(items);
+    }
+    ```
 
 ### ❌ DON'T
 
-```java
-// Don't use raw types
-List list = new ArrayList(); // ❌
-
-// Don't ignore generic type
-List<?> list = getList();
-// list.add(something); // ❌ Can't add to unknown type
-
-// Don't create generic arrays
-T[] array = new T[10]; // ❌ Compile error
-
-// Don't use instanceof with generic types
-if (obj instanceof List<String>) {} // ❌ Compile error
-if (obj instanceof List<?>) {} // ✅ OK
-
-// Don't suppress warnings unnecessarily
-@SuppressWarnings("unchecked")
-List<String> list = (List<String>) obj; // Only if absolutely necessary
-```
-
-### Naming Conventions
-
-```
-Single letter type parameters:
-- T: Type
-- E: Element (used in collections)
-- K: Key
-- V: Value
-- N: Number
-- S, U, V: 2nd, 3rd, 4th types
-
-Multi-letter for clarity:
-- Entity, Id, Result, Response, etc.
-```
+1. **Don't use raw types**
+2. **Don't ignore compiler warnings**
+3. **Don't create generic exceptions**
+4. **Don't use generics with primitives** (use wrappers)
+5. **Don't use instanceof with parameterized types**
+6. **Don't create arrays of generic types**
+7. **Don't cast unnecessarily**
+8. **Don't overuse wildcards** (keep it simple)
+9. **Don't forget type erasure limitations**
+10. **Don't mix raw and generic types**
 
 ---
 
-## Production Examples
+## Conclusion
 
-### Generic Repository Pattern
+**Key Takeaways:**
 
-```java
-public interface CrudRepository<T, ID> {
-    T save(T entity);
-    Optional<T> findById(ID id);
-    List<T> findAll();
-    void deleteById(ID id);
-    boolean existsById(ID id);
-}
+1. **Type Safety**: Generics provide compile-time type checking
+2. **PECS**: Producer Extends, Consumer Super
+3. **Bounded Types**: Use `extends` for upper bounds
+4. **Wildcards**: Use `?`, `? extends T`, `? super T` appropriately
+5. **Type Erasure**: Understand runtime limitations
+6. **Collections**: Prefer generic collections over raw types
+7. **Patterns**: Use generics to create reusable, type-safe components
 
-public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID> {
-    protected final MongoTemplate mongoTemplate;
-    protected final Class<T> entityClass;
-
-    @SuppressWarnings("unchecked")
-    protected AbstractRepository(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-        this.entityClass = (Class<T>) ((ParameterizedType) getClass()
-            .getGenericSuperclass())
-            .getActualTypeArguments()[0];
-    }
-
-    @Override
-    public T save(T entity) {
-        return mongoTemplate.save(entity);
-    }
-
-    @Override
-    public Optional<T> findById(ID id) {
-        return Optional.ofNullable(mongoTemplate.findById(id, entityClass));
-    }
-
-    @Override
-    public List<T> findAll() {
-        return mongoTemplate.findAll(entityClass);
-    }
-}
-
-// Usage
-public class UserRepository extends AbstractRepository<User, String> {
-    public UserRepository(MongoTemplate mongoTemplate) {
-        super(mongoTemplate);
-    }
-
-    public Optional<User> findByEmail(String email) {
-        Query query = Query.query(Criteria.where("email").is(email));
-        return Optional.ofNullable(mongoTemplate.findOne(query, entityClass));
-    }
-}
-```
-
-### Generic Response Wrapper
-
-```java
-public record ApiResponse<T>(
-    T data,
-    String message,
-    int statusCode,
-    LocalDateTime timestamp
-) {
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(data, "Success", 200, LocalDateTime.now());
-    }
-
-    public static <T> ApiResponse<T> error(String message, int statusCode) {
-        return new ApiResponse<>(null, message, statusCode, LocalDateTime.now());
-    }
-
-    public boolean isSuccess() {
-        return statusCode >= 200 && statusCode < 300;
-    }
-}
-
-// Usage in controller
-@GetMapping("/users/{id}")
-public ApiResponse<User> getUser(@PathVariable String id) {
-    return userService.findById(id)
-        .map(ApiResponse::success)
-        .orElseGet(() -> ApiResponse.error("User not found", 404));
-}
-```
-
----
-
-*This guide provides comprehensive patterns for mastering Java generics. Generics enable type-safe, reusable code - use them effectively to write better Java applications.*
+**Remember**: Generics are about writing flexible, reusable, and type-safe code. Start with basics, understand PECS, and practice with real-world examples!
