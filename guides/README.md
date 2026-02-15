@@ -68,6 +68,9 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - [**Spring WebFlux & Reactive Programming**](spring-webflux-reactive-guide.md)
   Comprehensive guide to reactive programming with Spring WebFlux and Project Reactor. Mono, Flux, reactive WebClient, backpressure, and performance patterns.
 
+- [**Project Reactor**](project-reactor-guide.md)
+  Master reactive programming with Project Reactor. Mono, Flux, transformation and filtering operators, backpressure, schedulers, error handling, and testing reactive code.
+
 - [**Spring Boot Production Mastery**](spring-boot-production-guide.md)
   Production-ready Spring Boot configuration, application lifecycle, actuator deep dive, graceful shutdown, startup optimization, and operational patterns.
 
@@ -94,6 +97,15 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 - [**Kafka Serialization & Deserialization**](kafka-serialization-guide.md)
   Complete guide to Kafka serialization, schema management, and data evolution. Avro, JSON, Protobuf, Schema Registry, and compatibility strategies.
+
+- [**Kafka Backpressure Handling**](kafka-backpressure-guide.md)
+  Managing backpressure in Kafka consumers, preventing lag, pause/resume patterns, rate limiting, parallel processing, and Reactor Kafka integration.
+
+- [**Kafka Zero Message Loss**](kafka-zero-loss-guide.md)
+  Implementing zero message loss with producer/consumer configuration, idempotence, transactions, error handling, retry patterns, DLQ, and exactly-once semantics.
+
+- [**Apache Flink 2.0**](apache-flink-guide.md)
+  Master stream and batch processing with Apache Flink 2.0. DataStream API, windowing, state management, checkpointing, watermarks, Table API/SQL, connectors, exactly-once semantics, and performance optimization.
 
 ### 🔧 Infrastructure & Operations
 
@@ -180,17 +192,21 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 1. [Apache Kafka Deep Dive](kafka-deep-dive-guide.md)
 2. [Kafka Serialization & Deserialization](kafka-serialization-guide.md)
-3. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
-4. [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
-5. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
-6. [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
-7. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
+3. [Kafka Backpressure Handling](kafka-backpressure-guide.md)
+4. [Kafka Zero Message Loss](kafka-zero-loss-guide.md)
+5. [Apache Flink 2.0](apache-flink-guide.md)
+6. [Event-Driven Architecture Mastery](event-driven-architecture-guide.md)
+7. [Distributed Transactions & Consistency](distributed-transactions-consistency-guide.md)
+8. [Modern Resilience with Resilience4j](resilience4j-complete-guide.md)
+9. [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
+10. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
 
 **Path 4: Spring Framework Mastery**
 
 1. [Spring Boot Production Mastery](spring-boot-production-guide.md)
 2. [Spring Security Complete Guide](spring-security-guide.md)
 3. [Spring WebFlux & Reactive Programming](spring-webflux-reactive-guide.md)
+4. [Project Reactor](project-reactor-guide.md)
 
 **Path 5: Quality & Best Practices**
 
@@ -201,9 +217,10 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 
 **Path 6: Data Engineering**
 
-1. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
-2. [Modern Redis with Lettuce](redis-lettuce-guide.md)
-3. [Database Migration & Schema Evolution](database-migration-guide.md)
+1. [Apache Flink 2.0](apache-flink-guide.md)
+2. [Modern MongoDB Query Patterns](mongodb-query-guide.md)
+3. [Modern Redis with Lettuce](redis-lettuce-guide.md)
+4. [Database Migration & Schema Evolution](database-migration-guide.md)
 
 **Path 7: Performance Engineering**
 
@@ -251,6 +268,10 @@ In-depth, tutorial-style guides for mastering specific technologies, patterns, a
 - **API Gateway & Service Mesh** → Start with [API Gateway & Service Mesh Patterns](api-gateway-service-mesh-guide.md)
 - **Apache Kafka internals** → Start with [Apache Kafka Deep Dive](kafka-deep-dive-guide.md)
 - **Kafka serialization** → Start with [Kafka Serialization](kafka-serialization-guide.md)
+- **Kafka backpressure & consumer lag** → Start with [Kafka Backpressure Handling](kafka-backpressure-guide.md)
+- **Kafka zero message loss** → Start with [Kafka Zero Message Loss](kafka-zero-loss-guide.md)
+- **Apache Flink stream processing** → Start with [Apache Flink 2.0](apache-flink-guide.md)
+- **Project Reactor & reactive streams** → Start with [Project Reactor](project-reactor-guide.md)
 - **Spring Boot production** → Start with [Spring Boot Production Mastery](spring-boot-production-guide.md)
 - **Spring Security** → Start with [Spring Security Complete Guide](spring-security-guide.md)
 - **Design patterns** → Start with [Design Patterns Decision Tree](design-patterns-decision-tree.md)

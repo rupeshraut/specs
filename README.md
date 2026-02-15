@@ -3,7 +3,7 @@
 A comprehensive collection of production-ready **cheatsheets** and in-depth **guides** for building scalable, resilient, distributed systems with Java 21+, Spring Boot 3.x, Kafka, MongoDB, and modern cloud infrastructure.
 
 - **26 Cheatsheets** — Quick-reference material for fast decision-making and pattern lookup
-- **37 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
+- **41 Comprehensive Guides** — Deep-dive tutorials for mastering technologies and practices
 
 ---
 
@@ -123,6 +123,7 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 **Spring & Security:**
 - [**Spring Security Complete Guide**](guides/spring-security-guide.md) — OAuth2, JWT, method security, authentication
 - [**Spring WebFlux & Reactive**](guides/spring-webflux-reactive-guide.md) — Reactive programming with Project Reactor
+- [**Project Reactor**](guides/project-reactor-guide.md) — Mono, Flux, backpressure, schedulers, reactive streams
 - [**Application Security Guide**](guides/application-security-guide.md) — OWASP Top 10, injection prevention, cryptography
 - [**Secrets Management**](guides/secrets-management-guide.md) — Vault, AWS Secrets Manager, secure configuration
 
@@ -144,10 +145,13 @@ For in-depth learning beyond quick-reference cheatsheets, explore the [**guides/
 
 **Data & Messaging:**
 - [**Kafka Serialization**](guides/kafka-serialization-guide.md) — Schema management and data evolution
+- [**Kafka Backpressure Handling**](guides/kafka-backpressure-guide.md) — Consumer lag prevention, pause/resume, rate limiting
+- [**Kafka Zero Message Loss**](guides/kafka-zero-loss-guide.md) — Idempotence, transactions, error handling, exactly-once
+- [**Apache Flink 2.0**](guides/apache-flink-guide.md) — Stream and batch processing, windowing, state management, exactly-once
 - [**Modern MongoDB Queries**](guides/mongodb-query-guide.md) — Queries, aggregations, and optimization
 - [**Modern Redis with Lettuce**](guides/redis-lettuce-guide.md) — Caching patterns and distributed locks
 
-[**→ View All Guides**](guides/README.md) — 37 comprehensive tutorials covering Java, Spring, architecture, security, testing, data, messaging, resilience, infrastructure, and tooling
+[**→ View All Guides**](guides/README.md) — 41 comprehensive tutorials covering Java, Spring, architecture, security, testing, data, messaging, resilience, infrastructure, and tooling
 
 ---
 
